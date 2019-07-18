@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/libstack/static/css/main.84bbc81c.chunk.css",
+    "main.js": "/libstack/static/js/main.d0e2a111.chunk.js",
+    "main.js.map": "/libstack/static/js/main.d0e2a111.chunk.js.map",
+    "runtime~main.js": "/libstack/static/js/runtime~main.ec0176d5.js",
+    "runtime~main.js.map": "/libstack/static/js/runtime~main.ec0176d5.js.map",
+    "static/js/2.b41502e9.chunk.js": "/libstack/static/js/2.b41502e9.chunk.js",
+    "static/js/2.b41502e9.chunk.js.map": "/libstack/static/js/2.b41502e9.chunk.js.map",
+    "index.html": "/libstack/index.html",
+    "precache-manifest.4b7b95311e86a6f821304f045da03be6.js": "/libstack/precache-manifest.4b7b95311e86a6f821304f045da03be6.js",
+    "service-worker.js": "/libstack/service-worker.js",
+    "static/css/main.84bbc81c.chunk.css.map": "/libstack/static/css/main.84bbc81c.chunk.css.map",
+    "static/media/libstack-logo.jpg": "/libstack/static/media/libstack-logo.c0ac9601.jpg"
+  }
+}
