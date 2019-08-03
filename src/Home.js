@@ -15,7 +15,7 @@ class Home extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.history.push("/search?query=" + this.state.query);
+    this.props.history.push("/lib-stack/search?query=" + this.state.query);
   }
 
   onChange(e) {
