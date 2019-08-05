@@ -1,8 +1,16 @@
 body {
   margin: 0;
-  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ui.form input:not([type]), .ui.form input[type=date], .ui.form input[type=datetime-local], 
+.ui.form input[type=email], .ui.form input[type=file], .ui.form input[type=number], 
+.ui.form input[type=password], .ui.form input[type=search], .ui.form input[type=tel], 
+.ui.form input[type=text], .ui.form input[type=time], .ui.form input[type=url],
+.ui.button, .ui.header {
+  font-family: 'Roboto', sans-serif;
 }
 
 code {
