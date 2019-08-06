@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import {Helmet} from 'react-helmet';
 
 import logo from './libstack-logo.jpg';
 import {List, Header} from 'semantic-ui-react';
@@ -15,6 +16,12 @@ class Search extends Component {
   render() {
     return (
       <div className="App">
+        <Helmet>
+          <title>{this.state.search.get("query")} - LibStack Search</title>
+          <meta name="description"
+                content="LibStack search for libraries, repositories and
+                packages."/>
+        </Helmet>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <Header as='h2'>Search</Header>
