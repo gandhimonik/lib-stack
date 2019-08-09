@@ -17,3 +17,62 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+.ui.grid {
+  max-width: 1440px;
+  width: 100%;
+}
+
+.ui.form input[type="text"] {
+  border-color: #56ccf2;
+}
+
+.ui.list.footer {
+  margin-left: 24px;
+}
+
+.ui.list.footer.abs {
+  bottom: 25px;
+  position: absolute;
+}
+
+.ui.list.footer > .item {
+  padding: 0 2rem;
+  border-right: 1px solid #6c6c6c;
+  margin-left: 0;
+}
+
+.ui.list.footer > .item:last-child {
+  border-right: none;
+}
+
+.ui.list.footer > .copyright {
+  color: #787878;
+  font-weight: 400;
+}
+
+.ui.list.footer > .link {
+  color: #0080DD;
+  font-weight: 400;
+}
+
+.ui.list.footer > .link:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (max-height: 640px) {
+  .ui.list.footer.abs {
+    position: relative;
+  }
+}
+
+@media only screen and (min-height: 641px) {
+  .ui.list.footer.abs {
+    position: absolute;
+  }
+}

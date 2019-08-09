@@ -1,0 +1,24 @@
+div.ui.header.logo {
+    font-family: 'Lora', sans-serif;
+    font-weight: 400;
+}
+
+div.ui.small.header.logo {
+    font-size: 24px;
+}
+
+div.ui.medium.header.logo {
+    font-size: 36px;
+}
+
+div.ui.large.header.logo {
+    font-size: 72px;
+}
+
+div.logo > span.first {
+    color: #ff7d00;
+}
+
+div.logo > span.second {
+    color: #00a3cf;
+}

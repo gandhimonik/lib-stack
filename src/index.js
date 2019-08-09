@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import * as routes from './routes';
 
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
-import Home from './Home';
+import Home from './home';
 import Search from './Search';
 import Repo from './Repo';
 
@@ -14,10 +15,10 @@ import * as serviceWorker from './serviceWorker';
 function App() {
   return (
     <Router>
-      <Route path="/" exact render={() => (<Redirect to="/lib-stack" />)} />
-      <Route path="/lib-stack" exact component={Home} />
-      <Route path="/lib-stack/search" component={Search} />
-      <Route path="/lib-stack/:owner/:repo" component={Repo} />
+      <Route path={routes.DEFAULT} exact render={() => (<Redirect to={routes.HOME} />)} />
+      <Route path={routes.HOME} exact component={Home} />
+      <Route path={routes.SEARCH} component={Search} />
+      <Route path={routes.REPO} component={Repo} />
     </Router>
   );
 }
