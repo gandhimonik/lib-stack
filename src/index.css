@@ -65,6 +65,14 @@ code {
   text-decoration: underline;
 }
 
+.App-logo {
+  max-height: 100px;
+}
+
+.App {
+  width: 100%;
+}
+
 @media only screen and (max-height: 640px) {
   .ui.list.footer.abs {
     position: relative;
