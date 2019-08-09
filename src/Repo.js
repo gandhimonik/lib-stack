@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
+import axios from 'axios';
+import {getParameters} from 'codesandbox/lib/api/define';
 
 import logo from './libstack-logo.jpg';
 
@@ -25,16 +27,46 @@ const GET_REPO = gql`
   }
 `;
 
+const parameters = getParameters({
+  files: {
+    "index.js": {
+      content: "console.log('hello')"
+    },
+    "package.json": {
+      content: { dependencies: {} }
+    }
+  }
+});
+
+const sandboxURL = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}&json=1`;
+
 class Repo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       owner: props.match.params.owner,
-      repo: props.match.params.repo
+      repo: props.match.params.repo,
+      sandboxUrl: 'https://codesandbox.io/embed/',
     };
+
+
+  }
+
+  componentDidMount = () => {
+    axios.get(sandboxURL)
+      .then(response => {
+        console.log(response.data.sandbox_id);
+        this.setState({
+          owner: this.state.owner,
+          repo: this.state.repo,
+          sandboxUrl: this.state.sandboxUrl + response.data.sandbox_id,
+        });
+      });
   }
 
   render() {
+   const { sandboxUrl } = this.state;
+
     return (
       <div className="App">
         <Helmet>
@@ -71,6 +103,20 @@ class Repo extends Component {
             );
           }}
         </Query>
+
+        {sandboxUrl &&
+        <iframe
+          src={this.state.sandboxUrl}
+          title="Code Example"
+          style={{
+            width:'100%',
+            height: '500px',
+            border: '0',
+            borderRadius: '4px',
+            overflow: 'hidden',
+          }}
+          sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+        />}
       </div>
     );
   }
