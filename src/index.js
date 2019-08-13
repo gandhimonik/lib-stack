@@ -12,8 +12,8 @@ import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
 import Home from './home';
-import Search from './Search';
-import Repo from './Repo';
+import Search from './search';
+import Repo from './repo';
 
 import * as serviceWorker from './serviceWorker';
 

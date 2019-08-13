@@ -5,9 +5,7 @@ import {Query} from 'react-apollo';
 import axios from 'axios';
 import {getParameters} from 'codesandbox/lib/api/define';
 
-import logo from './libstack-logo.jpg';
-
-import {Header} from 'semantic-ui-react';
+import GlobalHeader from '../common/header';
 
 const GET_REPO = gql`
   query ($owner:String!, $name:String!) {
@@ -74,10 +72,7 @@ class Repo extends Component {
           <meta name="description"
                 content="Github repo description"/>
         </Helmet>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <Header as='h2'>Repo</Header>
-        </header>
+        <GlobalHeader withSearch={true} />
         <Query
           query={GET_REPO}
           variables={{owner: this.state.owner, name: this.state.repo}}

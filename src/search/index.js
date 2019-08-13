@@ -4,8 +4,8 @@ import {Helmet} from 'react-helmet';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
 
-import logo from './libstack-logo.jpg';
 import {List, Header} from 'semantic-ui-react';
+import GlobalHeader from '../common/header';
 
 const GET_REPO_CURRENT_USER = gql`
   query($query: String!) {
@@ -40,10 +40,7 @@ class Search extends Component {
                 content="LibStack search for libraries, repositories and
                 packages."/>
         </Helmet>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <Header as='h2'>Search</Header>
-        </header>
+        <GlobalHeader />
         <Header as='h3'>Query: {this.state.query}</Header>
         <List>
           <List.Item><Link to="/lib-stack/owner1/lib1">Lib1</Link></List.Item>
