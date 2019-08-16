@@ -28,7 +28,7 @@ const GET_REPO = gql`
 const parameters = getParameters({
   files: {
     "index.js": {
-      content: "console.log('hello')"
+      content: "con sole.log('hello')"
     },
     "package.json": {
       content: { dependencies: {} }

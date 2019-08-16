@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
 
-import {List, Header} from 'semantic-ui-react';
+import {List, Grid} from 'semantic-ui-react';
 import GlobalHeader from '../common/header';
+import SearchForm from '../common/search-form';
+
+import './index.css';
+import Intro from '../common/intro';
 
 const GET_REPO_CURRENT_USER = gql`
   query($query: String!) {
@@ -14,8 +17,14 @@ const GET_REPO_CURRENT_USER = gql`
         node {
           ...on Repository {
             id
+            name
             nameWithOwner
             url
+            descriptionHTML
+            owner {
+              login
+              avatarUrl
+            }
           }
         }
       }
@@ -27,27 +36,36 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: new URLSearchParams(props.location.search).get('query')
+      query: new URLSearchParams(props.location.search).get('query'),
+      navLink: '/lib-stack/search'
     };
+  }
+
+  onSubmit = (e, query) => {
+      e.preventDefault();
+      this.props.history.push(this.state.navLink + "?query=" + query);
+      this.setState({
+        query
+      });
   }
 
   render() {
     return (
-      <div className="App">
+      <Grid>
         <Helmet>
           <title>{this.state.query} - LibStack Search</title>
           <meta name="description"
                 content="LibStack search for libraries, repositories and
                 packages."/>
         </Helmet>
-        <GlobalHeader />
-        <Header as='h3'>Query: {this.state.query}</Header>
-        <List>
-          <List.Item><Link to="/lib-stack/owner1/lib1">Lib1</Link></List.Item>
-          <List.Item><Link to="/lib-stack/owner2/lib2">Lib2</Link></List.Item>
-          <List.Item><Link to="/lib-stack/owner3/lib3">Lib3</Link></List.Item>
-          <List.Item><Link to="/lib-stack/owner4/lib4">Lib4</Link></List.Item>
-        </List>
+        <Grid.Row>
+          <GlobalHeader />
+        </Grid.Row>
+        <Grid.Row centered className="search">
+          <Grid.Column width={14}>
+            <SearchForm onSubmit={this.onSubmit} query={this.state.query} />
+          </Grid.Column>
+        </Grid.Row>
         <Query query={GET_REPO_CURRENT_USER} variables={{query: this.state.query}}>
           {({data, loading, error}) => {
             if (error) {
@@ -61,11 +79,18 @@ class Search extends Component {
             const { search: { edges } } = data;
 
             return (
-              <List>
+              <List style={{width: '100%'}}>
                 {edges.map(({node}) => {
                   return (
-                    <List.Item key={node.id}>
-                      <Link to={node.nameWithOwner}>{node.nameWithOwner}</Link>
+                    <List.Item key={node.id} style={{marginBottom: '3rem'}}>
+                      <Intro 
+                        nameWithOwner={node.nameWithOwner}
+                        name={node.name}
+                        description={node.descriptionHTML}
+                        avatar={node.owner.avatarUrl}
+                        owner={node.owner.login}
+                        isLink={true}
+                       />
                     </List.Item>
                   );
                 })}
@@ -73,7 +98,7 @@ class Search extends Component {
             );
           }}
         </Query>
-      </div>
+      </Grid>
     );
   }
 }

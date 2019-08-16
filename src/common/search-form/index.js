@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 import { Form } from 'semantic-ui-react';
 
 class SearchForm extends Component {
-    state = {
-        query: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            query: props.query,
+        };
     }
 
     onChange = e => {

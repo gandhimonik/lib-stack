@@ -1,0 +1,72 @@
+a.repo.link {
+    white-space: nowrap;
+}
+
+a.repo.link > h2.ui.header {
+    color: #0080DD;
+    font-weight: 700;
+}
+
+a.repo.link > h2.ui.header:hover {
+    text-decoration: underline;
+}
+
+.ui.container.title {
+    align-items: center;
+    display: flex;
+}
+
+.ui.container.profile {
+    align-items: center;
+    display: flex;
+}
+
+.ui.container.profile .avatar {
+    height: 24px;
+    margin-left: 3rem;
+    width: 24px;
+}
+
+.ui.container.profile .owner,
+.ui.container.profile .version, 
+.ui.container.profile .date {
+    color: #6b6b6b;
+    font-weight: 500;
+    margin-left: 1rem;
+    padding-right: 1rem;
+    white-space: nowrap;
+}
+
+.ui.container.profile .owner,
+.ui.container.profile .version {
+    border-right: 1px solid #6b6b6b;
+}
+
+.repo.desc {
+    color: #939393;
+    font-size: 16px;
+    margin-top: .5rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .ui.container {
+        left: -1rem;
+        margin: 1rem 0;
+        position: relative;
+    }
+
+    .ui.container.title {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ui.container.profile .avatar {
+        margin-left: 0;
+    }
+
+    .ui.container.profile .owner,
+    .ui.container.profile .version, 
+    .ui.container.profile .date {
+        font-size: 12px;
+    }
+}
