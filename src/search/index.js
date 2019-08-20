@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Helmet} from 'react-helmet';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
+import axios from 'axios';
 
 import {List, Grid} from 'semantic-ui-react';
 import GlobalHeader from '../common/header';
@@ -32,24 +33,49 @@ const GET_REPO_CURRENT_USER = gql`
   }
 `;
 
+const npmRegistryUrl = `http://registry.npmjs.org/-/v1/search?text=`;
+
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
       query: new URLSearchParams(props.location.search).get('query'),
-      navLink: '/lib-stack/search'
+      navLink: '/lib-stack/search',
+      npmResults: [],
     };
   }
 
+  componentDidMount = () => {
+    let url = npmRegistryUrl + this.state.query + '&size=3&from=0';
+
+    axios.get(url)
+      .then(response => {
+        console.log(response);
+        this.setState({
+          query: this.state.query,
+          npmResults: response.data.objects,
+        });
+      });
+  }
+
   onSubmit = (e, query) => {
-      e.preventDefault();
-      this.props.history.push(this.state.navLink + "?query=" + query);
-      this.setState({
-        query
+    e.preventDefault();
+    let url = npmRegistryUrl + query + '&size=3&from=0';
+
+    axios.get(url)
+      .then(response => {
+        console.log(response);
+        this.props.history.push(this.state.navLink + "?query=" + query);
+        this.setState({
+          query,
+          npmResults: response.data.objects,
+        });
       });
   }
 
   render() {
+    const { npmResults } = this.state;
+
     return (
       <Grid>
         <Helmet>
@@ -91,6 +117,7 @@ class Search extends Component {
                         owner={node.owner.login}
                         isLink={true}
                        />
+                       <a href={node.url} target="_blank" rel="noopener noreferrer">Github</a>
                     </List.Item>
                   );
                 })}
@@ -98,6 +125,20 @@ class Search extends Component {
             );
           }}
         </Query>
+
+        {npmResults && npmResults.length > 0 && 
+          <List>
+            {npmResults.map(obj => {
+              let date = new Date(obj.package.date);
+              return (
+                <List.Item key={obj.score.final}>
+                  {obj.package.name} | published {obj.package.version} | {date.toDateString()}
+                </List.Item>
+              );
+            })
+            }
+          </List>
+        }  
       </Grid>
     );
   }

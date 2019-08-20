@@ -28,7 +28,7 @@ const GET_REPO = gql`
 const parameters = getParameters({
   files: {
     "index.js": {
-      content: "con sole.log('hello')"
+      content: "console.log('hello')"
     },
     "package.json": {
       content: { dependencies: {} }
@@ -36,7 +36,7 @@ const parameters = getParameters({
   }
 });
 
-const sandboxURL = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}&json=1`;
+const defineSandboxUrl = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}&json=1`;
 
 class Repo extends Component {
   constructor(props) {
@@ -46,12 +46,10 @@ class Repo extends Component {
       repo: props.match.params.repo,
       sandboxUrl: 'https://codesandbox.io/embed/',
     };
-
-
   }
 
   componentDidMount = () => {
-    axios.get(sandboxURL)
+    axios.get(defineSandboxUrl)
       .then(response => {
         console.log(response.data.sandbox_id);
         this.setState({
