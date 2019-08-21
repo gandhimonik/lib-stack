@@ -10,6 +10,7 @@ import SearchForm from '../common/search-form';
 
 import './index.css';
 import Intro from '../common/intro';
+import Stats from '../common/stats';
 
 const GET_REPO_CURRENT_USER = gql`
   query($query: String!) {
@@ -25,6 +26,16 @@ const GET_REPO_CURRENT_USER = gql`
             owner {
               login
               avatarUrl
+            }
+            watchers {
+              totalCount
+            }
+            forkCount
+            issues {
+              totalCount
+            }
+            stargazers {
+              totalCount
             }
           }
         }
@@ -116,6 +127,14 @@ class Search extends Component {
                         avatar={node.owner.avatarUrl}
                         owner={node.owner.login}
                         isLink={true}
+                       />
+                       <Stats 
+                          type={'left'}
+                          watchers={node.watchers.totalCount}
+                          stars={node.stargazers.totalCount}
+                          downloads={node.watchers.totalCount}
+                          forks={node.forkCount}
+                          bugs={node.issues.totalCount}
                        />
                        <a href={node.url} target="_blank" rel="noopener noreferrer">Github</a>
                     </List.Item>

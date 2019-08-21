@@ -1,0 +1,51 @@
+.lib-stats {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.lib-stats.left {
+    justify-content: flex-start;
+}
+
+.lib-stats.center {
+    justify-content: center;
+}
+
+.statistic {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.lib-stats.left .statistic {
+    margin-right: 2rem;
+}
+
+.lib-stats.center .statistic {
+    margin-right: 3rem;
+}
+
+.statistic > .label {
+    align-items: center;
+    color: #AEADAD;
+    display: flex;
+    font-size: 14px;
+}
+
+.statistic > .label > img {
+    height: 20px;
+    width: 20px;
+}
+
+.statistic > .label > span {
+    margin-left: .45rem;
+}
+
+.statistic > .value {
+    color: #6B6B6B;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: .25rem;
+}
