@@ -21,22 +21,24 @@ const GET_REPO = gql`
       watchers {
         totalCount
       }
+      tree: object(expression: "master:") {
+        ...on Tree {
+          entries {
+            oid
+            name
+          }
+        }
+      }
+      packageJSON:  object(expression: "master:package.json") {
+        ...on Blob {
+          text
+        }
+      }
     }
   }
 `;
 
-const parameters = getParameters({
-  files: {
-    "index.js": {
-      content: "console.log('hello')"
-    },
-    "package.json": {
-      content: { dependencies: {} }
-    }
-  }
-});
-
-const defineSandboxUrl = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}&json=1`;
+const sandboxBaseUrl = `https://codesandbox.io/api/v1/sandboxes/define`;
 
 class Repo extends Component {
   constructor(props) {
@@ -45,23 +47,43 @@ class Repo extends Component {
       owner: props.match.params.owner,
       repo: props.match.params.repo,
       sandboxUrl: 'https://codesandbox.io/embed/',
+      isSandboxReady: false,
     };
   }
 
-  componentDidMount = () => {
-    axios.get(defineSandboxUrl)
+  getSandbox = (packageJSON) => {
+    console.log(packageJSON);
+    const parameters = getParameters({
+      files: {
+        "index.js": {
+          content: "const " + packageJSON.name + " = require('" + packageJSON.name + "');"
+        },
+        "package.json": {
+          content: { 
+            dependencies: {
+              [packageJSON.name]: "^" + packageJSON.version,
+            } 
+          }
+        }
+      }
+    });
+
+    const url = sandboxBaseUrl + `?parameters=${parameters}&json=1`;
+
+    axios.get(url)
       .then(response => {
         console.log(response.data.sandbox_id);
         this.setState({
           owner: this.state.owner,
           repo: this.state.repo,
           sandboxUrl: this.state.sandboxUrl + response.data.sandbox_id,
+          isSandboxReady: true,
         });
       });
   }
 
   render() {
-   const { sandboxUrl } = this.state;
+   const { sandboxUrl, isSandboxReady } = this.state;
 
     return (
       <div className="App">
@@ -86,6 +108,10 @@ class Repo extends Component {
 
             const { repository } = data;
 
+            if (!isSandboxReady) {
+              this.getSandbox(JSON.parse(repository.packageJSON.text));
+            }
+
             return (
               <div>
                 <h1>{repository.nameWithOwner}</h1>
@@ -97,9 +123,9 @@ class Repo extends Component {
           }}
         </Query>
 
-        {sandboxUrl &&
+        {isSandboxReady &&
         <iframe
-          src={this.state.sandboxUrl}
+          src={sandboxUrl}
           title="Code Example"
           style={{
             width:'100%',
