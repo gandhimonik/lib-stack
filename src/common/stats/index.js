@@ -30,7 +30,7 @@ const Stats = ({type, watchers, stars, downloads, forks, bugs}) => {
                     <Image src={downloadImg} />
                     <span>DOWNLOADS</span>
                 </div>
-                <span className="value">{downloads}</span>
+                <span className="value">{downloads ? downloads : 'N/A'}</span>
             </div>
             <div className="statistic">
                 <div className="label">

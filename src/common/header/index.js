@@ -1,13 +1,16 @@
 import React from 'react';
 import { Menu, Input } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+
 import Logo from '../logo';
+import * as routes from '../../routes';
 
 import './index.css';
 
 const GlobalHeader = ({withSearch}) => (
     <Menu inverted secondary className="thunder global header">
         <Menu.Item name="home">
-            <Logo size={'medium'} />
+            <Link to={routes.HOME}><Logo size={'medium'} /></Link>
         </Menu.Item>
 
         {withSearch && 

@@ -35,10 +35,11 @@ code {
 
 .ui.list.footer {
   margin-left: 24px;
+  margin-bottom: 24px;
 }
 
 .ui.list.footer.abs {
-  bottom: 25px;
+  bottom: 0;
   position: absolute;
 }
 
