@@ -6,20 +6,35 @@ import axios from 'axios';
 import {getParameters} from 'codesandbox/lib/api/define';
 
 import GlobalHeader from '../common/header';
+import Intro from '../common/intro';
+import Stats from '../common/stats';
+import Markdown from '../common/markdown';
 
 const GET_REPO = gql`
   query ($owner:String!, $name:String!) {
     repository(owner:$owner, name:$name) {
       id
-      descriptionHTML
       name
-      url
       nameWithOwner
-      stargazers {
-        totalCount
+      url
+      descriptionHTML
+      owner {
+        login
+        avatarUrl
       }
       watchers {
         totalCount
+      }
+      forkCount
+      issues {
+        totalCount
+      }
+      stargazers {
+        totalCount
+      }
+      downloadCount @client
+      defaultBranchRef {
+        name
       }
       tree: object(expression: "master:") {
         ...on Tree {
@@ -30,6 +45,11 @@ const GET_REPO = gql`
         }
       }
       packageJSON:  object(expression: "master:package.json") {
+        ...on Blob {
+          text
+        }
+      }
+      readMe:  object(expression: "master:README.md") {
         ...on Blob {
           text
         }
@@ -107,17 +127,36 @@ class Repo extends Component {
             }
 
             const { repository } = data;
+            console.log(repository);
 
-            if (!isSandboxReady) {
-              this.getSandbox(JSON.parse(repository.packageJSON.text));
-            }
+            // if (!isSandboxReady) {
+            //   console.log(repository);
+            //   this.getSandbox(JSON.parse(repository.packageJSON.text));
+            // }
+
+            const downloads = (repository.downloadCount) ? repository.downloadCount.downloads : '';
 
             return (
               <div>
-                <h1>{repository.nameWithOwner}</h1>
-                <h5>{repository.stargazers.totalCount} = Stars</h5>
-                <h5>{repository.watchers.totalCount} = Watchers</h5>
-                <p dangerouslySetInnerHTML={{__html: repository.descriptionHTML}}></p>
+                <Intro 
+                  nameWithOwner={repository.nameWithOwner}
+                  name={repository.name}
+                  description={repository.descriptionHTML}
+                  avatar={repository.owner.avatarUrl}
+                  owner={repository.owner.login}
+                  isLink={false}
+                />
+                <Stats 
+                  type={'left'}
+                  watchers={repository.watchers.totalCount}
+                  stars={repository.stargazers.totalCount}
+                  downloads={downloads}
+                  forks={repository.forkCount}
+                  bugs={repository.issues.totalCount}
+                />
+                <Markdown
+                  data={repository.readMe.text}
+                />
               </div>
             );
           }}

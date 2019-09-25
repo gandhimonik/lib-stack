@@ -1,0 +1,75 @@
+.readme {
+    padding: 1rem;
+}
+
+.readme > h1 {
+    border-bottom: 1px solid #dadada;
+    color: #515151;
+    font-size: 36px;
+    padding-bottom: .5rem;
+}
+
+.readme > h2, .readme > h3 {
+    border-bottom: 1px solid #dadada;
+    color: #515151;
+    font-size: 30px;
+    font-weight: 500;
+    padding-bottom: .5rem;
+}
+
+.readme > h4, .readme > h5, .readme > h6 {
+    color: #515151;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.readme > p, .readme > ul, .readme > table {
+    color: #595959;
+    font-size: 16px;
+}
+
+.readme a {
+    color: #0080DD;
+}
+
+.readme blockquote {
+    background: #f8f8f8;
+    border-left: solid 3px #00a3cf;
+    border-right: solid 1px #00a3cf;
+    color: #00a3cf;
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+pre {
+    background: rgb(244, 251, 244);
+    color:  rgb(94, 110, 94);
+    padding: 1rem;
+}
+
+code {
+    font-family: 'Roboto Mono', source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
+
+.readme a > img {
+    max-width: 100%;
+}
+
+.readme table {
+    border: solid 1px #dadada;
+    border-collapse: collapse;
+}
+
+.readme table tr {
+    border: solid 1px #dadada;
+}
+
+.readme tr:nth-child(even) {
+    background-color: rgb(244, 251, 244);
+}
+
+.readme th, .readme td {
+    border: solid 1px #dadada;
+    padding: 1rem;
+}

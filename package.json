@@ -12,6 +12,8 @@
     "codesandbox": "^2.1.9",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
+    "highlight.js": "^9.15.10",
+    "markdown-it": "^9.1.0",
     "react": "^16.8.6",
     "react-apollo": "^3.0.0",
     "react-dom": "^16.8.6",

@@ -10,7 +10,8 @@ body {
 .ui.form input[type=password], .ui.form input[type=search], .ui.form input[type=tel], 
 .ui.form input[type=text], .ui.form input[type=time], .ui.form input[type=url],
 .ui.button, .ui.header, .ui.list>.item .header,
-.ui.statistics .statistic > .value {
+.ui.statistics .statistic > .value,
+h1, h2, h3, h4, h5  {
   font-family: 'Roboto', sans-serif;
 }
 

@@ -55,9 +55,15 @@ class Search extends Component {
     };
   }
 
-  render() {
-    const { npmResults } = this.state;
+  onSubmit = (e, query) => {
+    e.preventDefault();
+    this.props.history.push(this.state.navLink + "?query=" + query);
+    this.setState({
+      query
+    });
+  }
 
+  render() {
     return (
       <Grid>
         <Helmet>
@@ -119,20 +125,6 @@ class Search extends Component {
             );
           }}
         </Query>
-
-        {npmResults && npmResults.length > 0 && 
-          <List>
-            {npmResults.map(obj => {
-              let date = new Date(obj.package.date);
-              return (
-                <List.Item key={obj.score.final}>
-                  {obj.package.name} | published {obj.package.version} | {date.toDateString()}
-                </List.Item>
-              );
-            })
-            }
-          </List>
-        }
         <Footer />
       </Grid>
     );
