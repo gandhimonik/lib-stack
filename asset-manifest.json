@@ -1,19 +1,23 @@
 {
   "files": {
-    "main.css": "/lib-stack/static/css/main.0326e54b.chunk.css",
-    "main.js": "/lib-stack/static/js/main.0ec2f3bf.chunk.js",
-    "main.js.map": "/lib-stack/static/js/main.0ec2f3bf.chunk.js.map",
+    "main.css": "/lib-stack/static/css/main.5f501edc.chunk.css",
+    "main.js": "/lib-stack/static/js/main.cb789257.chunk.js",
+    "main.js.map": "/lib-stack/static/js/main.cb789257.chunk.js.map",
     "runtime~main.js": "/lib-stack/static/js/runtime~main.7b0cd03c.js",
     "runtime~main.js.map": "/lib-stack/static/js/runtime~main.7b0cd03c.js.map",
-    "static/css/2.e8cf6b46.chunk.css": "/lib-stack/static/css/2.e8cf6b46.chunk.css",
-    "static/js/2.ca9f9e24.chunk.js": "/lib-stack/static/js/2.ca9f9e24.chunk.js",
-    "static/js/2.ca9f9e24.chunk.js.map": "/lib-stack/static/js/2.ca9f9e24.chunk.js.map",
+    "static/css/2.2cd60b32.chunk.css": "/lib-stack/static/css/2.2cd60b32.chunk.css",
+    "static/js/2.d883cac2.chunk.js": "/lib-stack/static/js/2.d883cac2.chunk.js",
+    "static/js/2.d883cac2.chunk.js.map": "/lib-stack/static/js/2.d883cac2.chunk.js.map",
     "index.html": "/lib-stack/index.html",
-    "precache-manifest.24d4414ba598df2de793da6290132574.js": "/lib-stack/precache-manifest.24d4414ba598df2de793da6290132574.js",
+    "precache-manifest.04c5dd24d8e90e850913de6f0c5ddadf.js": "/lib-stack/precache-manifest.04c5dd24d8e90e850913de6f0c5ddadf.js",
     "service-worker.js": "/lib-stack/service-worker.js",
-    "static/css/2.e8cf6b46.chunk.css.map": "/lib-stack/static/css/2.e8cf6b46.chunk.css.map",
-    "static/css/main.0326e54b.chunk.css.map": "/lib-stack/static/css/main.0326e54b.chunk.css.map",
+    "static/css/2.2cd60b32.chunk.css.map": "/lib-stack/static/css/2.2cd60b32.chunk.css.map",
+    "static/css/main.5f501edc.chunk.css.map": "/lib-stack/static/css/main.5f501edc.chunk.css.map",
     "static/media/semantic.min.css": "/lib-stack/static/media/outline-icons.ef60a4f6.woff",
-    "static/media/libstack-logo.jpg": "/lib-stack/static/media/libstack-logo.c0ac9601.jpg"
+    "static/media/bug.svg": "/lib-stack/static/media/bug.9056ae55.svg",
+    "static/media/download.svg": "/lib-stack/static/media/download.fdaafcb0.svg",
+    "static/media/eye.svg": "/lib-stack/static/media/eye.04de4817.svg",
+    "static/media/fork.svg": "/lib-stack/static/media/fork.9b771578.svg",
+    "static/media/star.svg": "/lib-stack/static/media/star.33fb0640.svg"
   }
 }

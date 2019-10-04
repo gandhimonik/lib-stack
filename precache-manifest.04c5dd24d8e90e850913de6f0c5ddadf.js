@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d899f7b34638c51c005e8b2a1552d15c",
+    "revision": "74d61cbcc4c00e3011a0e2c24fa39d6e",
     "url": "/lib-stack/index.html"
   },
   {
-    "revision": "0f6a08c15d463b7806f0",
-    "url": "/lib-stack/static/css/2.e8cf6b46.chunk.css"
+    "revision": "61672843fe242dd02c78",
+    "url": "/lib-stack/static/css/2.2cd60b32.chunk.css"
   },
   {
-    "revision": "8008802d44be53a95974",
-    "url": "/lib-stack/static/css/main.0326e54b.chunk.css"
+    "revision": "413e50cb80fbd693b542",
+    "url": "/lib-stack/static/css/main.5f501edc.chunk.css"
   },
   {
-    "revision": "0f6a08c15d463b7806f0",
-    "url": "/lib-stack/static/js/2.ca9f9e24.chunk.js"
+    "revision": "61672843fe242dd02c78",
+    "url": "/lib-stack/static/js/2.d883cac2.chunk.js"
   },
   {
-    "revision": "8008802d44be53a95974",
-    "url": "/lib-stack/static/js/main.0ec2f3bf.chunk.js"
+    "revision": "413e50cb80fbd693b542",
+    "url": "/lib-stack/static/js/main.cb789257.chunk.js"
   },
   {
     "revision": "9f3a53b4a51977d3d08f",
@@ -44,8 +44,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lib-stack/static/media/brand-icons.e8c322de.woff2"
   },
   {
+    "revision": "9056ae55b1cb765ba8030ea1cf2416a3",
+    "url": "/lib-stack/static/media/bug.9056ae55.svg"
+  },
+  {
+    "revision": "fdaafcb086e8e42d8df06ca225cd3d9b",
+    "url": "/lib-stack/static/media/download.fdaafcb0.svg"
+  },
+  {
+    "revision": "04de4817da9f4c9e9057426674df8549",
+    "url": "/lib-stack/static/media/eye.04de4817.svg"
+  },
+  {
     "revision": "9c74e172f87984c48ddf5c8108cabe67",
     "url": "/lib-stack/static/media/flags.9c74e172.png"
+  },
+  {
+    "revision": "9b7715788fa3410075698d5bb16dfb48",
+    "url": "/lib-stack/static/media/fork.9b771578.svg"
   },
   {
     "revision": "0ab54153eeeca0ce03978cc463b257f7",
@@ -68,10 +84,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lib-stack/static/media/icons.faff9214.woff"
   },
   {
-    "revision": "c0ac960102d253c55259bcf9f05c8f3a",
-    "url": "/lib-stack/static/media/libstack-logo.c0ac9601.jpg"
-  },
-  {
     "revision": "701ae6abd4719e9c2ada3535a497b341",
     "url": "/lib-stack/static/media/outline-icons.701ae6ab.eot"
   },
@@ -90,5 +102,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
     "url": "/lib-stack/static/media/outline-icons.ef60a4f6.woff"
+  },
+  {
+    "revision": "33fb0640fb32561a27b2e4d13c49c28d",
+    "url": "/lib-stack/static/media/star.33fb0640.svg"
   }
 ]);
