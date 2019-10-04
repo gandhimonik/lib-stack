@@ -52,8 +52,9 @@ code {
     font-size: 13px;
 }
 
-.readme a > img {
-    max-width: 100%;
+img {
+    background: #ffffff;
+    max-width: 100% !important;
 }
 
 .readme table {

@@ -10,7 +10,7 @@ import './index.css';
 
 const Stats = ({type, watchers, stars, downloads, forks, bugs}) => {
     return (
-        <div className={"lib-stats " + type}>
+        <div className={"lib-stats " + type} style={{ marginLeft: '1rem' }}>
             <div className="statistic">
                 <div className="label">
                     <Image src={starImg} />

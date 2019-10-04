@@ -36,7 +36,7 @@ const GET_REPO = gql`
       defaultBranchRef {
         name
       }
-      tree: object(expression: "master:") {
+      tree: object(expression: "HEAD:") {
         ...on Tree {
           entries {
             oid
@@ -44,12 +44,25 @@ const GET_REPO = gql`
           }
         }
       }
-      packageJSON:  object(expression: "master:package.json") {
+      packageJSON:  object(expression: "HEAD:package.json") {
         ...on Blob {
           text
         }
       }
-      readMe:  object(expression: "master:README.md") {
+      README:  object(
+        expression: "HEAD:README.md") {
+        ...on Blob {
+          text
+        }
+      }
+      readme: object(
+        expression: "HEAD:readme.md") {
+        ...on Blob {
+          text
+        }
+      }
+      githubReadme: object(
+        expression: "HEAD:.github/readme.md") {
         ...on Blob {
           text
         }
@@ -135,7 +148,8 @@ class Repo extends Component {
             // }
 
             const downloads = (repository.downloadCount) ? repository.downloadCount.downloads : '';
-
+            let readMe = repository.README || repository.readme || repository.githubReadme;
+            
             return (
               <div>
                 <Intro 
@@ -154,9 +168,12 @@ class Repo extends Component {
                   forks={repository.forkCount}
                   bugs={repository.issues.totalCount}
                 />
-                <Markdown
-                  data={repository.readMe.text}
-                />
+                { readMe && readMe.text && 
+                  <Markdown
+                    nameWithOwner={repository.nameWithOwner}
+                    data={readMe.text}
+                  />
+                }
               </div>
             );
           }}

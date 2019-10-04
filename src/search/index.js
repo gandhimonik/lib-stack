@@ -117,7 +117,7 @@ class Search extends Component {
                           forks={node.forkCount}
                           bugs={node.issues.totalCount}
                        />
-                       <a href={node.url} target="_blank" rel="noopener noreferrer">Github</a>
+                       {/* <a href={node.url} target="_blank" rel="noopener noreferrer">Github</a> */}
                     </List.Item>
                   );
                 })}

@@ -1,11 +1,11 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import { Header, Container } from 'semantic-ui-react';
 
 import './index.css';
 
 const Intro = (props) => (
-    <Fragment>
+    <div style={{ marginLeft: '1rem', marginTop: '1rem' }}>
         <Container fluid className="title">
             {props.isLink && 
                 <Link to={props.nameWithOwner} className="repo link">
@@ -27,7 +27,7 @@ const Intro = (props) => (
         <Container fluid className="description">
             <p className="repo desc" dangerouslySetInnerHTML={{__html: props.description}}></p>
         </Container>
-    </Fragment>
+    </div>
     
 );
 

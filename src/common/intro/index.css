@@ -2,6 +2,11 @@ a.repo.link {
     white-space: nowrap;
 }
 
+h2.ui.header {
+    margin: 0;
+    white-space: nowrap;
+}
+
 a.repo.link > h2.ui.header {
     color: #0080DD;
     font-weight: 700;
@@ -32,7 +37,9 @@ a.repo.link > h2.ui.header:hover {
 .ui.container.profile .date {
     color: #6b6b6b;
     font-weight: 500;
+    margin-bottom: 0;
     margin-left: 1rem;
+    margin-top: 0;
     padding-right: 1rem;
     white-space: nowrap;
 }
