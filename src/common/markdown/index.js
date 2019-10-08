@@ -40,8 +40,7 @@ class Markdown extends Component {
         const hrefUrl = new RegExp(/(href=")([^#https][\w\d-/.]*)/, 'gm');
 
         data = data.replace(fullImgUrl, '$1$2raw$4$5');
-        console.log(data);
-
+        
         let html = this.md.render(data);
         html = html.replace(htmlImgUrl, '$1https://github.com/' + nameWithOwner + '/raw/master/$2$3');
         html = html.replace(hrefUrl, '$1https://github.com/' + nameWithOwner + '/blob/master$2');
