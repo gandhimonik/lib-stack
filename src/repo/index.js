@@ -125,7 +125,7 @@ class Repo extends Component {
           <meta name="description"
                 content="Github repo description"/>
         </Helmet>
-        <GlobalHeader withSearch={true} />
+        <GlobalHeader withSearch={true} history={this.props.history} />
         <Query
           query={GET_REPO}
           variables={{owner: this.state.owner, name: this.state.repo}}

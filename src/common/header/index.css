@@ -12,19 +12,22 @@
 }
 
 .ui.inverted.menu.global.header, 
-.ui.inverted.menu.global.header .menu.search .item {
+.ui.inverted.menu.global.header .menu.search .item,
+.ui.inverted.menu.global.header .menu.search .item .ui.form,
+.ui.inverted.menu.global.header .menu.search .item .ui.form .field .ui.input input {
     margin: 0;
     width: 100%;
 }
 
-.ui.input.search.wrapper > input {
+.search.wrapper .ui.input > input {
     background-color: #494949;
+    border-color: #494949;
     color: #fff;
     height: 46px;
     width: 100%;
 }
 
-.ui.input.search.wrapper .search.icon {
-    color: #fff;
+.search.wrapper .ui.input .search.icon {
+    color: #ddd;
     opacity: 1;
 }

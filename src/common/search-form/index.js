@@ -6,6 +6,7 @@ class SearchForm extends Component {
         super(props);
         this.state = {
             query: props.query,
+            isLite: props.isLite,
         };
     }
 
@@ -18,26 +19,40 @@ class SearchForm extends Component {
     render() {
         return (
             <Form onSubmit={e => this.props.onSubmit(e, this.state.query)}>
-                <Form.Group>
-                    <Form.Input
-                    width={13}
-                    size="big"
-                    name="query"
-                    value={this.state.query}
-                    onChange={this.onChange}
-                    placeholder="Search..."
-                    style={{margin: '1em 0'}}
+                {this.state.isLite && 
+                    <Form.Input 
+                        name="query"
+                        className="search wrapper" 
+                        icon="search" 
+                        placeholder="Search Libraries..." 
+                        value={this.state.query}
+                        onChange={this.onChange}
                     />
-                    <Form.Button
-                    fluid
-                    width={3}
-                    size="big"
-                    color="orange"
-                    type="submit"
-                    style={{fontWeight: 400, margin: '1em 0'}}>
-                    Search
-                    </Form.Button>
-                </Form.Group>
+                }
+
+                {!this.state.isLite && 
+                    <Form.Group>
+                        <Form.Input
+                            width={13}
+                            size="big"
+                            name="query"
+                            value={this.state.query}
+                            onChange={this.onChange}
+                            placeholder="Search..."
+                            style={{margin: '1em 0'}}
+                        />
+                        <Form.Button
+                            fluid
+                            width={3}
+                            size="big"
+                            color="orange"
+                            type="submit"
+                            style={{fontWeight: 400, margin: '1em 0'}}>
+                            Search
+                        </Form.Button>
+                    </Form.Group>
+                }
+                
             </Form>
         );
     }
