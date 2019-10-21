@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import * as routes from './routes';
@@ -19,15 +19,9 @@ import Repo from './repo';
 
 import * as serviceWorker from './serviceWorker';
 import { ApolloLink } from 'apollo-link';
+import AuthProvider, { AuthContext } from './common/auth';
 
 const GITHUB_BASE_URL = 'https://api.github.com/graphql';
-
-const httpLink = new HttpLink({
-  uri: GITHUB_BASE_URL,
-  headers: {
-    authorization: `Bearer ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`,
-  },
-});
 
 const cache = new InMemoryCache();
 
@@ -44,24 +38,33 @@ const errorLink = onError(({operation, response, graphQLErrors, networkError}) =
   console.log('Response: ', response);
 });
 
-const client = new ApolloClient({
-  cache,
-  link: ApolloLink.from([errorLink, httpLink]),
-  resolvers: {
-    Repository: {
-      downloadCount: (repo, _args, { cache }) => {
-        return axios
-          .get('https://api.npmjs.org/downloads/point/last-week/' + repo.name)
-          .then(response => response.data)
-          .catch(error => {
-            return null;
-          });
+function App() {
+  const {token} = useContext(AuthContext);
+
+  const httpLink = new HttpLink({
+    uri: GITHUB_BASE_URL,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  const client = new ApolloClient({
+    cache,
+    link: ApolloLink.from([errorLink, httpLink]),
+    resolvers: {
+      Repository: {
+        downloadCount: (repo, _args, { cache }) => {
+          return axios
+            .get('https://api.npmjs.org/downloads/point/last-week/' + repo.name)
+            .then(response => response.data)
+            .catch(error => {
+              return null;
+            });
+        },
       },
     },
-  },
-});
+  });
 
-function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -74,7 +77,7 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<AuthProvider><App/></AuthProvider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
