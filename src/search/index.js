@@ -94,13 +94,13 @@ class Search extends Component {
             const { search: { edges } } = data;
 
             return (
-              <List style={{width: '100%'}}>
+              <List className={'search-list'}>
                 {edges.map(({node}) => {
                   const downloads = (node.downloadCount) ? node.downloadCount.downloads : '';
 
                   return (
-                    <List.Item key={node.id} style={{marginBottom: '3rem'}}>
-                      <Intro 
+                    <List.Item className={'search-item'} key={node.id}>
+                      <Intro
                         nameWithOwner={node.nameWithOwner}
                         name={node.name}
                         description={node.descriptionHTML}
@@ -108,7 +108,7 @@ class Search extends Component {
                         owner={node.owner.login}
                         isLink={true}
                        />
-                       <Stats 
+                       <Stats
                           type={'left'}
                           watchers={node.watchers.totalCount}
                           stars={node.stargazers.totalCount}
