@@ -90,7 +90,6 @@ class Search extends Component {
               return <div>Loading...</div>
             }
 
-            console.log(data);
             data = (data.search) ? data : { search: {edges: []} };
             const { search: { edges } } = data;
 

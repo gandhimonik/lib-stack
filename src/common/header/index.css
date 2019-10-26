@@ -1,10 +1,12 @@
 .ui.inverted.menu.thunder {
     background-color: #262223;
     height: 60px;
+    justify-content: center;
 }
 
 .ui.inverted.menu.global.header .menu.search {
-    width: 600px;
+    flex-grow: 2;
+    max-width: 600px;
 }
 
 .ui.inverted.menu.global.header .menu.search.right {
@@ -30,4 +32,13 @@
 .search.wrapper .ui.input .search.icon {
     color: #ddd;
     opacity: 1;
+}
+
+img.ui.image.profile {
+    border-radius: 50%;
+    width: 40px;
+}
+
+.menu.profile {
+    font-size: 16px;
 }

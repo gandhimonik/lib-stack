@@ -5,6 +5,7 @@ import SearchForm from '../common/search-form';
 import Footer from '../common/footer';
 
 import './index.css';
+import GlobalHeader from '../common/header';
 
 class Home extends Component {
   constructor(props) {
@@ -23,8 +24,11 @@ class Home extends Component {
   render() {
     return (
       <div className="main" style={{height: '100vh'}}>
-        <Grid style={{marginTop: '10vh', marginBottom: '7rem'}}>
+        <Grid style={{marginBottom: '7rem'}}>
           <Grid.Row centered>
+            <GlobalHeader withoutLogo={true} noBackground={true} />
+          </Grid.Row>
+          <Grid.Row centered style={{marginTop: '3vh'}}>
             <Logo size={'large'} />
           </Grid.Row>
           <Grid.Row centered>
