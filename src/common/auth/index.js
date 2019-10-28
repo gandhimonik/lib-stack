@@ -44,11 +44,12 @@ class AuthProvider extends Component {
             .get()
             .then(doc => {
                 if (doc.exists) {
-                    const {token} = doc.data();
+                    const {token, created} = doc.data();
                     this.setState({
                         token,
                         user
                     });
+                    this.saveToken(user, token, created, new Date());
                 } else {
                     this.firebase
                         .auth()
@@ -60,7 +61,7 @@ class AuthProvider extends Component {
                                     token: result.credential.accessToken,
                                     user: result.user,
                                 });
-                                this.saveToken(this.state.user, this.state.token);
+                                this.saveToken(this.state.user, this.state.token, new Date(), new Date());
                             }
                         })
                         .catch(error => console.log(error));
@@ -70,13 +71,15 @@ class AuthProvider extends Component {
         
     }
 
-    saveToken(user, token) {
+    saveToken(user, token, created, modified) {
         this.db
             .doc(`users/${user.uid}`)
             .set({
                 email: user.email,
                 name: user.displayName,
                 token: token,
+                created: created,
+                modified: modified,
             });
     }
 
