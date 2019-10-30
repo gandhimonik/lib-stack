@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
 
-import {List, Grid} from 'semantic-ui-react';
+import {List, Grid, Loader} from 'semantic-ui-react';
 import GlobalHeader from '../common/header';
 import SearchForm from '../common/search-form';
 
@@ -87,7 +87,7 @@ class Search extends Component {
             }
 
             if (loading) {
-              return <div>Loading...</div>
+              return <Grid.Row centered className={"loader"}><Loader active>Loading</Loader></Grid.Row>;
             }
 
             data = (data.search) ? data : { search: {edges: []} };

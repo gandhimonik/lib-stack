@@ -9,6 +9,7 @@ import GlobalHeader from '../common/header';
 import Intro from '../common/intro';
 import Stats from '../common/stats';
 import Markdown from '../common/markdown';
+import { Loader } from 'semantic-ui-react';
 
 const GET_REPO = gql`
   query ($owner:String!, $name:String!) {
@@ -136,7 +137,7 @@ class Repo extends Component {
             }
 
             if (loading) {
-              return <div>Loading...</div>
+              return <Loader active>Loading</Loader>;
             }
 
             const { repository } = data;

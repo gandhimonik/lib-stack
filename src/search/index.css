@@ -21,3 +21,9 @@
     margin: 0 auto 3rem;
     max-width: 1440px;
 }
+
+div.row.loader {
+    background: #f2f2f2;
+    height: 70vh;
+    margin-bottom: 1rem;
+}

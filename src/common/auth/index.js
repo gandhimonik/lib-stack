@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import config from '../../config';
+import { Loader } from 'semantic-ui-react';
 
 export const AuthContext = React.createContext();
 firebase.initializeApp(config);
@@ -20,11 +21,9 @@ class AuthProvider extends Component {
         this.provider.addScope('repo');
         this.provider.setCustomParameters({
             'allow_signup': 'false',
+            'state': '12345',
         });
         this.db = this.firebase.firestore();
-    }
-
-    componentDidMount() {
         this.unsubscribe = this.firebase
             .auth()
             .onAuthStateChanged(user => {
@@ -103,7 +102,7 @@ class AuthProvider extends Component {
                 </AuthContext.Provider>
             );
         } else {
-            return <div>Signing in...</div>
+            return  <Loader active>Loading</Loader>
         }
     }
 }
