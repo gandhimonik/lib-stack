@@ -6,7 +6,7 @@ import config from '../../config';
 import { Loader } from 'semantic-ui-react';
 
 export const AuthContext = React.createContext();
-firebase.initializeApp(config);
+firebase.initializeApp(config());
 
 class AuthProvider extends Component {
     constructor(props) {
@@ -65,9 +65,9 @@ class AuthProvider extends Component {
                         })
                         .catch(error => console.log(error));
                 }
-                
+
             });
-        
+
     }
 
     saveToken(user, token, created, modified) {
