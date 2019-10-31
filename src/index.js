@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import * as routes from './routes';
 import axios from 'axios';
 
