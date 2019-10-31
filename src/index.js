@@ -68,7 +68,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Route path={routes.DEFAULT} exact render={() => (<Redirect to={routes.HOME} />)} />
+        {/* <Route path={routes.DEFAULT} exact render={() => (<Redirect to={routes.HOME} />)} /> */}
         <Route path={routes.HOME} exact component={Home} />
         <Route path={routes.SEARCH} component={Search} />
         <Route path={routes.REPO} component={Repo} />

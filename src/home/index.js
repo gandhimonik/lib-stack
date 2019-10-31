@@ -3,6 +3,7 @@ import { Grid, Header, Container } from 'semantic-ui-react';
 import Logo from '../common/logo';
 import SearchForm from '../common/search-form';
 import Footer from '../common/footer';
+import * as routes from '../routes';
 
 import './index.css';
 import GlobalHeader from '../common/header';
@@ -12,7 +13,7 @@ class Home extends Component {
     super(props);
     this.state = {
       query: '',
-      navLink: '/lib-stack/search'
+      navLink: routes.SEARCH
     };
   }
   

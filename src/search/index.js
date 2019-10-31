@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Helmet} from 'react-helmet';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
+import * as routes from '../routes';
 
 import {List, Grid, Loader} from 'semantic-ui-react';
 import GlobalHeader from '../common/header';
@@ -50,7 +51,7 @@ class Search extends Component {
     super(props);
     this.state = {
       query: new URLSearchParams(props.location.search).get('query'),
-      navLink: '/lib-stack/search',
+      navLink: routes.SEARCH,
       npmResults: [],
     };
   }

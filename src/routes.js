@@ -1,4 +1,4 @@
 export const DEFAULT = '/';
-export const HOME = '/lib-stack';
-export const SEARCH = '/lib-stack/search';
-export const REPO = '/lib-stack/:owner/:repo';
+export const HOME = '/';
+export const SEARCH = '/search';
+export const REPO = '/:owner/:repo';
