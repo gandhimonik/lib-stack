@@ -49,3 +49,15 @@
     font-weight: 500;
     margin-top: .25rem;
 }
+
+@media only screen and (max-width: 1000px) {
+    .lib-stats {
+      margin-left: 2rem;
+    }
+}
+
+@media only screen and (min-width: 1001px) {
+    .lib-stats {
+      margin-left: 1rem;
+    }
+}

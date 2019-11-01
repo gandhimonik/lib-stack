@@ -33,7 +33,7 @@ a.repo.link > h2.ui.header:hover {
 }
 
 .ui.container.profile .owner,
-.ui.container.profile .version, 
+.ui.container.profile .version,
 .ui.container.profile .date {
     color: #6b6b6b;
     font-weight: 500;
@@ -56,7 +56,7 @@ a.repo.link > h2.ui.header:hover {
 }
 
 @media only screen and (max-width: 600px) {
-    .ui.container {
+    .ui.container.profile {
         left: -1rem;
         margin: 1rem 0;
         position: relative;
@@ -72,7 +72,7 @@ a.repo.link > h2.ui.header:hover {
     }
 
     .ui.container.profile .owner,
-    .ui.container.profile .version, 
+    .ui.container.profile .version,
     .ui.container.profile .date {
         font-size: 12px;
     }

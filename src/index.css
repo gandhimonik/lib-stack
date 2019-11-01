@@ -86,3 +86,9 @@ code {
     position: absolute;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  div.ui.container {
+    left: 0;
+  }
+}

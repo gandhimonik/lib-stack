@@ -16,7 +16,7 @@ class Home extends Component {
       navLink: routes.SEARCH
     };
   }
-  
+
   onSubmit = (e, query) => {
       e.preventDefault();
       this.props.history.push(this.state.navLink + "?query=" + query);
@@ -25,7 +25,7 @@ class Home extends Component {
   render() {
     return (
       <div className="main" style={{height: '100vh'}}>
-        <Grid style={{marginBottom: '7rem'}}>
+        <Grid className={"home-page-grid"} style={{marginBottom: '7rem'}}>
           <Grid.Row centered>
             <GlobalHeader withoutLogo={true} noBackground={true} />
           </Grid.Row>

@@ -13,7 +13,7 @@
     margin-right: 1rem;
 }
 
-.ui.inverted.menu.global.header, 
+.ui.inverted.menu.global.header,
 .ui.inverted.menu.global.header .menu.search .item,
 .ui.inverted.menu.global.header .menu.search .item .ui.form,
 .ui.inverted.menu.global.header .menu.search .item .ui.form .field .ui.input input {
@@ -41,4 +41,27 @@ img.ui.image.profile {
 
 .menu.profile {
     font-size: 16px;
+}
+
+@media only screen and (max-width: 600px) {
+    img.ui.image.profile {
+      width: 32px;
+    }
+
+    .ui.inverted.menu.global.header .menu.search {
+        flex-grow: 1;
+        max-width: 150px;
+    }
+
+    .ui.secondary.menu .item {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1000px) {
+    .ui.inverted.menu.global.header .menu.search {
+        flex-grow: 1;
+        max-width: 300px;
+    }
 }

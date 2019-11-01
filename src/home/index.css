@@ -5,3 +5,8 @@
 .ui.text.copy {
     color: #6B6B6B;
 }
+
+div.ui.grid.home-page-grid {
+    margin-right: 0;
+    width: auto;
+}

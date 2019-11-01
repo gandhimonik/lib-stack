@@ -44,6 +44,7 @@
 pre {
     background: rgb(244, 251, 244);
     color:  rgb(94, 110, 94);
+    overflow-x: auto;
     padding: 1rem;
 }
 
