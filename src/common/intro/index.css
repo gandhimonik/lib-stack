@@ -55,7 +55,25 @@ a.repo.link > h2.ui.header:hover {
     margin-top: .5rem;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 400px) {
+    .ui.container.profile .date {
+        max-width: 25%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    a.repo.link {
+        max-width: 100%;
+    }
+
+    a.repo.link > h2.ui.header {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .ui.container.profile {
         left: -1rem;
         margin: 1rem 0;
@@ -75,5 +93,13 @@ a.repo.link > h2.ui.header:hover {
     .ui.container.profile .version,
     .ui.container.profile .date {
         font-size: 12px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .ui.container.profile {
+        left: 0;
+        margin: 1rem 0;
+        position: relative;
     }
 }
