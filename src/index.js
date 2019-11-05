@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import * as routes from './routes';
@@ -19,7 +19,6 @@ import Repo from './repo';
 
 import * as serviceWorker from './serviceWorker';
 import { ApolloLink } from 'apollo-link';
-import AuthProvider, { AuthContext } from './common/auth';
 
 const GITHUB_BASE_URL = 'https://api.github.com/graphql';
 
