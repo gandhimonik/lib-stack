@@ -39,12 +39,13 @@ const errorLink = onError(({operation, response, graphQLErrors, networkError}) =
 });
 
 function App() {
-  const {token} = useContext(AuthContext);
+  // const {token} = useContext(AuthContext);
 
   const httpLink = new HttpLink({
     uri: GITHUB_BASE_URL,
     headers: {
-      authorization: `Bearer ${token}`,
+      // authorization: `Bearer ${token}`,
+      authorization: 'Bearer ' + btoa("óôç}Çxën:ã~:í÷:××µiþ7ëÝ|kMz"),
     },
   });
 
@@ -77,7 +78,7 @@ function App() {
   );
 }
 
-ReactDOM.render(<AuthProvider><App/></AuthProvider>, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

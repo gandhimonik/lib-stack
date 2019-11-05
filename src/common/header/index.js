@@ -21,11 +21,12 @@ class GlobalHeader extends Component {
             npmResults: [],
             withSearch: this.props.withSearch,
             history: this.props.history,
+            user: null,
         };
     }
 
     componentDidMount() {
-        const {user, signOut} = this.context;
+        // const {user, signOut} = this.context;
         this.setState({
             query: '',
             navLink: '/lib-stack/search',
@@ -34,8 +35,8 @@ class GlobalHeader extends Component {
             withoutLogo: this.props.withoutLogo,
             noBackground: this.props.noBackground,
             history: this.props.history,
-            user: user,
-            signOut: signOut,
+            // user: user,
+            // signOut: signOut,
         });
     }
 
