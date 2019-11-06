@@ -17,87 +17,29 @@ class AuthProvider extends Component {
             history: props.history,
         };
         this.firebase = firebase;
-        this.provider = new this.firebase.auth.GithubAuthProvider();
-        this.provider.addScope('repo');
-        this.provider.setCustomParameters({
-            'allow_signup': 'false',
-            'state': '12345',
-        });
         this.db = this.firebase.firestore();
-        this.unsubscribe = this.firebase
-            .auth()
-            .onAuthStateChanged(user => {
-                if (user) {
-                    console.log('auth exists', user);
-                    this.getToken(user);
-                } else {
-                    console.log('redirecting for auth');
-                    this.firebase.auth().signInWithRedirect(this.provider);
-                }
-            });
+        const authId = process.env.NODE_ENV === 'production' ? 'lHKKj0XvvQHFHqgEvTwf' : 'WdDnpiHcUIhnMTw7kDMu';
+        this.getToken(authId);
     }
 
-    getToken(user) {
-        return this.db
-            .doc(`users/${user.uid}`)
+    getToken(authId) {
+        this.db
+            .doc(`auth/${authId}`)
             .get()
             .then(doc => {
                 if (doc.exists) {
-                    const {token, created} = doc.data();
+                    const {token} = doc.data();
                     this.setState({
-                        token,
-                        user
+                        token
                     });
-                    this.saveToken(user, token, created, new Date());
-                } else {
-                    this.firebase
-                        .auth()
-                        .getRedirectResult()
-                        .then(result => {
-                            if (result.credential) {
-                                console.log(result);
-                                this.setState({
-                                    token: result.credential.accessToken,
-                                    user: result.user,
-                                });
-                                this.saveToken(this.state.user, this.state.token, new Date(), new Date());
-                            }
-                        })
-                        .catch(error => console.log(error));
                 }
-
             });
-
-    }
-
-    saveToken(user, token, created, modified) {
-        this.db
-            .doc(`users/${user.uid}`)
-            .set({
-                email: user.email,
-                name: user.displayName,
-                token: token,
-                created: created,
-                modified: modified,
-            });
-    }
-
-    signOut() {
-        this.firebase
-            .auth()
-            .signOut()
-            .then(res => {
-                console.log('signed out');
-                this.unsubscribe();
-                window.location.href = "https://www.google.com";
-            })
-            .catch(err => console.log(err));
     }
 
     render() {
         if (this.state.token) {
             return (
-                <AuthContext.Provider value={{token: this.state.token, user: this.state.user, signOut: () => this.signOut()}}>
+                <AuthContext.Provider value={{token: this.state.token}}>
                     {this.props.children}
                 </AuthContext.Provider>
             );
