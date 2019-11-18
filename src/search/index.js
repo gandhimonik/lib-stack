@@ -93,6 +93,7 @@ class Search extends Component {
 
             data = (data.search) ? data : { search: {edges: []} };
             const { search: { edges } } = data;
+            console.log(edges);
 
             return (
               <List className={'search-list'}>

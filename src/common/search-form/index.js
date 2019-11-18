@@ -5,7 +5,7 @@ class SearchForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: props.query,
+            query: props.query || '',
             isLite: props.isLite,
         };
     }
