@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {Helmet} from 'react-helmet';
-import gql from 'graphql-tag';
-import {Query} from 'react-apollo';
 import * as routes from '../routes';
+import axios from 'axios';
 
 import {List, Grid, Loader} from 'semantic-ui-react';
 import GlobalHeader from '../common/header';
@@ -13,39 +12,6 @@ import Intro from '../common/intro';
 import Stats from '../common/stats';
 import Footer from '../common/footer';
 
-const GET_REPO_CURRENT_USER = gql`
-  query($query: String!) {
-    search(query: $query, type:REPOSITORY, first: 5) {
-      edges {
-        node {
-          ...on Repository {
-            id
-            name
-            nameWithOwner
-            url
-            descriptionHTML
-            owner {
-              login
-              avatarUrl
-            }
-            watchers {
-              totalCount
-            }
-            forkCount
-            issues {
-              totalCount
-            }
-            stargazers {
-              totalCount
-            }
-            downloadCount @client
-          }
-        }
-      }
-    }
-  }
-`;
-
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -54,17 +20,31 @@ class Search extends Component {
       navLink: routes.SEARCH,
       npmResults: [],
     };
+    this.doSearch(new URLSearchParams(props.location.search).get('query'));
+  }
+
+  doSearch = (query) => {
+    axios
+      .get('https://test-github-oauth.firebaseapp.com/api/v1/search?q=' + query + '&o=0')
+      .then(res => {
+        this.setState({
+          query: query,
+          npmResults: res.data,
+        });
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
   }
 
   onSubmit = (e, query) => {
     e.preventDefault();
     this.props.history.push(this.state.navLink + "?query=" + query);
-    this.setState({
-      query
-    });
+    this.doSearch(query);
   }
 
   render() {
+    const results = this.state.npmResults;
+
     return (
       <Grid>
         <Helmet>
@@ -81,51 +61,33 @@ class Search extends Component {
             <SearchForm onSubmit={this.onSubmit} query={this.state.query} />
           </Grid.Column>
         </Grid.Row>
-        <Query query={GET_REPO_CURRENT_USER} variables={{query: this.state.query}}>
-          {({data, loading, error}) => {
-            if (error) {
-              return <div>Error...</div>
-            }
-
-            if (loading) {
-              return <Grid.Row centered className={"loader"}><Loader active>Loading</Loader></Grid.Row>;
-            }
-
-            data = (data.search) ? data : { search: {edges: []} };
-            const { search: { edges } } = data;
-            console.log(edges);
+        <List className={'search-list'}>
+          {results.map(node => {
+            console.log(node);
 
             return (
-              <List className={'search-list'}>
-                {edges.map(({node}) => {
-                  const downloads = (node.downloadCount) ? node.downloadCount.downloads : '';
-
-                  return (
-                    <List.Item className={'search-item'} key={node.id}>
-                      <Intro
-                        nameWithOwner={node.nameWithOwner}
-                        name={node.name}
-                        description={node.descriptionHTML}
-                        avatar={node.owner.avatarUrl}
-                        owner={node.owner.login}
-                        isLink={true}
-                       />
-                       <Stats
-                          type={'left'}
-                          watchers={node.watchers.totalCount}
-                          stars={node.stargazers.totalCount}
-                          downloads={downloads}
-                          forks={node.forkCount}
-                          bugs={node.issues.totalCount}
-                       />
-                       {/* <a href={node.url} target="_blank" rel="noopener noreferrer">Github</a> */}
-                    </List.Item>
-                  );
-                })}
-              </List>
+              <List.Item className={'search-item'} key={node.package.name}>
+                <Intro
+                  nameWithOwner={node.package.name + '/' + node.package.name}
+                  name={node.package.name}
+                  description={node.package.description}
+                  owner={node.package.publisher.username}
+                  version={node.package.version}
+                  date={new Date(node.package.date).toDateString()}
+                  isLink={true}
+                  />
+                  <Stats
+                    type={'left'}
+                    watchers={node.github.watchCount}
+                    stars={node.github.starCount}
+                    downloads={0}
+                    forks={node.github.forkCount}
+                    bugs={node.github.issueCount}
+                  />
+              </List.Item>
             );
-          }}
-        </Query>
+          })}
+        </List>
         <Footer />
       </Grid>
     );

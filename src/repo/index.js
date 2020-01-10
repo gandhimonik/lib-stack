@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
-import gql from 'graphql-tag';
-import {Query} from 'react-apollo';
 import axios from 'axios';
 import {getParameters} from 'codesandbox/lib/api/define';
 
@@ -10,67 +8,6 @@ import Intro from '../common/intro';
 import Stats from '../common/stats';
 import Markdown from '../common/markdown';
 import { Loader } from 'semantic-ui-react';
-
-const GET_REPO = gql`
-  query ($owner:String!, $name:String!) {
-    repository(owner:$owner, name:$name) {
-      id
-      name
-      nameWithOwner
-      url
-      descriptionHTML
-      owner {
-        login
-        avatarUrl
-      }
-      watchers {
-        totalCount
-      }
-      forkCount
-      issues {
-        totalCount
-      }
-      stargazers {
-        totalCount
-      }
-      downloadCount @client
-      defaultBranchRef {
-        name
-      }
-      tree: object(expression: "HEAD:") {
-        ...on Tree {
-          entries {
-            oid
-            name
-          }
-        }
-      }
-      packageJSON:  object(expression: "HEAD:package.json") {
-        ...on Blob {
-          text
-        }
-      }
-      README:  object(
-        expression: "HEAD:README.md") {
-        ...on Blob {
-          text
-        }
-      }
-      readme: object(
-        expression: "HEAD:readme.md") {
-        ...on Blob {
-          text
-        }
-      }
-      githubReadme: object(
-        expression: "HEAD:.github/readme.md") {
-        ...on Blob {
-          text
-        }
-      }
-    }
-  }
-`;
 
 const sandboxBaseUrl = `https://codesandbox.io/api/v1/sandboxes/define`;
 
@@ -82,7 +19,21 @@ class Repo extends Component {
       repo: props.match.params.repo,
       sandboxUrl: 'https://codesandbox.io/embed/',
       isSandboxReady: false,
+      packageData: null,
     };
+    this.getData();
+  }
+
+  getData = () => {
+    axios
+      .get('https://test-github-oauth.firebaseapp.com/api/v1/package?repo=' + this.state.repo)
+      .then(res => {
+        this.setState({
+          packageData: res.data,
+        });
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
   }
 
   getSandbox = (packageJSON) => {
@@ -93,10 +44,10 @@ class Repo extends Component {
           content: "const " + packageJSON.name + " = require('" + packageJSON.name + "');"
         },
         "package.json": {
-          content: { 
+          content: {
             dependencies: {
               [packageJSON.name]: "^" + packageJSON.version,
-            } 
+            }
           }
         }
       }
@@ -127,58 +78,34 @@ class Repo extends Component {
                 content="Github repo description"/>
         </Helmet>
         <GlobalHeader withSearch={true} history={this.props.history} />
-        <Query
-          query={GET_REPO}
-          variables={{owner: this.state.owner, name: this.state.repo}}
-        >
-          {({data, loading, error}) => {
-            if (error) {
-              return <div>Error...</div>
+
+        { this.state.packageData &&
+          <div>
+            <Intro
+              nameWithOwner={this.state.packageData.collected.metadata.name}
+              name={this.state.packageData.collected.metadata.name}
+              description={this.state.packageData.collected.metadata.description}
+              owner={this.state.packageData.collected.metadata.publisher.username}
+              version={this.state.packageData.collected.metadata.version}
+              date={new Date(this.state.packageData.collected.metadata.date).toDateString()}
+              isLink={false}
+            />
+            <Stats
+              type={'left'}
+              watchers={this.state.packageData.github.watchCount}
+              stars={this.state.packageData.github.starCount}
+              downloads={this.state.packageData.collected.npm.downloads[0].count}
+              forks={this.state.packageData.github.forkCount}
+              bugs={this.state.packageData.github.issueCount}
+            />
+            { this.state.packageData.collected.metadata.readme &&
+              <Markdown
+                nameWithOwner={this.state.owner+ '/' + this.state.repo}
+                data={this.state.packageData.collected.metadata.readme}
+              />
             }
-
-            if (loading) {
-              return <Loader active>Loading</Loader>;
-            }
-
-            const { repository } = data;
-            console.log(repository);
-
-            // if (!isSandboxReady) {
-            //   console.log(repository);
-            //   this.getSandbox(JSON.parse(repository.packageJSON.text));
-            // }
-
-            const downloads = (repository.downloadCount) ? repository.downloadCount.downloads : '';
-            let readMe = repository.README || repository.readme || repository.githubReadme;
-            
-            return (
-              <div>
-                <Intro 
-                  nameWithOwner={repository.nameWithOwner}
-                  name={repository.name}
-                  description={repository.descriptionHTML}
-                  avatar={repository.owner.avatarUrl}
-                  owner={repository.owner.login}
-                  isLink={false}
-                />
-                <Stats 
-                  type={'left'}
-                  watchers={repository.watchers.totalCount}
-                  stars={repository.stargazers.totalCount}
-                  downloads={downloads}
-                  forks={repository.forkCount}
-                  bugs={repository.issues.totalCount}
-                />
-                { readMe && readMe.text && 
-                  <Markdown
-                    nameWithOwner={repository.nameWithOwner}
-                    data={readMe.text}
-                  />
-                }
-              </div>
-            );
-          }}
-        </Query>
+          </div>
+        }
 
         {isSandboxReady &&
         <iframe
