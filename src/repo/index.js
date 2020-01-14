@@ -79,6 +79,10 @@ class Repo extends Component {
         </Helmet>
         <GlobalHeader withSearch={true} history={this.props.history} />
 
+        { this.state.packageData === null &&
+          <Loader active>Loading</Loader>
+        }
+
         { this.state.packageData &&
           <div>
             <Intro
