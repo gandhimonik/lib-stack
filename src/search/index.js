@@ -39,6 +39,9 @@ class Search extends Component {
   onSubmit = (e, query) => {
     e.preventDefault();
     this.props.history.push(this.state.navLink + "?query=" + query);
+    this.setState({
+      npmResults: []
+    });
     this.doSearch(query);
   }
 
@@ -62,6 +65,10 @@ class Search extends Component {
           </Grid.Column>
         </Grid.Row>
         <List className={'search-list'}>
+          {results.length === 0 &&
+            <Loader className={"list-loader"} active>Loading</Loader>
+          }
+
           {results.map(node => {
             console.log(node);
 
