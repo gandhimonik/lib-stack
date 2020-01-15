@@ -68,19 +68,20 @@ class Search extends Component {
             return (
               <List.Item className={'search-item'} key={node.package.name}>
                 <Intro
-                  nameWithOwner={node.package.name + '/' + node.package.name}
+                  nameWithOwner={node.package.nameWithOwner}
                   name={node.package.name}
                   description={node.package.description}
                   owner={node.package.publisher.username}
                   version={node.package.version}
                   date={new Date(node.package.date).toDateString()}
+                  gravatar={node.package.publisher.gravatar}
                   isLink={true}
                   />
                   <Stats
                     type={'left'}
                     watchers={node.github.watchCount}
                     stars={node.github.starCount}
-                    downloads={0}
+                    downloads={node.downloadCount}
                     forks={node.github.forkCount}
                     bugs={node.github.issueCount}
                   />

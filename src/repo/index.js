@@ -82,26 +82,27 @@ class Repo extends Component {
         { this.state.packageData &&
           <div>
             <Intro
-              nameWithOwner={this.state.packageData.collected.metadata.name}
+              nameWithOwner={this.state.packageData.collected.metadata.nameWithOwner}
               name={this.state.packageData.collected.metadata.name}
               description={this.state.packageData.collected.metadata.description}
               owner={this.state.packageData.collected.metadata.publisher.username}
               version={this.state.packageData.collected.metadata.version}
               date={new Date(this.state.packageData.collected.metadata.date).toDateString()}
+              gravatar={this.state.packageData.collected.metadata.publisher.gravatar}
               isLink={false}
             />
             <Stats
               type={'left'}
               watchers={this.state.packageData.github.watchCount}
               stars={this.state.packageData.github.starCount}
-              downloads={this.state.packageData.collected.npm.downloads[0].count}
+              downloads={this.state.packageData.downloadCount}
               forks={this.state.packageData.github.forkCount}
               bugs={this.state.packageData.github.issueCount}
             />
             { this.state.packageData.collected.metadata.readme &&
               <Markdown
                 nameWithOwner={this.state.owner+ '/' + this.state.repo}
-                data={this.state.packageData.collected.metadata.readme}
+                data={this.state.packageData.github.readme}
               />
             }
           </div>

@@ -19,7 +19,7 @@ const Intro = (props) => (
             }
 
             <Container fluid className="profile">
-                <img className="avatar" src={props.avatar || profileImg} alt="Avatar not found" />
+                <img className="avatar" src={props.gravatar || profileImg} alt="Avatar not found" />
                 <Header as="h5" className="owner">{props.owner}</Header>
                 <Header as="h5" className="version">published {props.version}</Header>
                 <Header as="h5" className="date">{props.date}</Header>
