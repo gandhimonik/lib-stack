@@ -31,22 +31,32 @@ class Repo extends Component {
         this.setState({
           packageData: res.data,
         });
+        this.getSandbox();
         console.log(res.data);
       })
       .catch(err => console.log(err));
   }
 
-  getSandbox = (packageJSON) => {
-    console.log(packageJSON);
+  getSandbox = () => {
+    const { collected: { metadata } } = this.state.packageData;
+    const { example } = this.state.packageData;
+    let snippet = null;
+
+    if (example === null || example.length === 0 || example[1].length === 0) {
+      snippet = "const " + metadata.name + " = require('" + metadata.name + "');\nconsole.log(" + metadata.name + ");"
+    } else {
+      snippet = example[1];
+    }
+
     const parameters = getParameters({
       files: {
         "index.js": {
-          content: "const " + packageJSON.name + " = require('" + packageJSON.name + "');"
+          content: snippet
         },
         "package.json": {
           content: {
             dependencies: {
-              [packageJSON.name]: "^" + packageJSON.version,
+              [metadata.name]: "^" + metadata.version,
             }
           }
         }
@@ -61,7 +71,7 @@ class Repo extends Component {
         this.setState({
           owner: this.state.owner,
           repo: this.state.repo,
-          sandboxUrl: this.state.sandboxUrl + response.data.sandbox_id,
+          sandboxUrl: this.state.sandboxUrl + response.data.sandbox_id + '?view=split&codemirror=1',
           isSandboxReady: true,
         });
       });
@@ -103,6 +113,20 @@ class Repo extends Component {
               forks={this.state.packageData.github.forkCount}
               bugs={this.state.packageData.github.issueCount}
             />
+            {isSandboxReady &&
+            <iframe
+              src={sandboxUrl}
+              title="Code Example"
+              style={{
+                width:'90%',
+                height: '500px',
+                border: '2px solid black',
+                borderRadius: '4px',
+                overflow: 'hidden',
+                marginLeft: '1.5rem',
+              }}
+              sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+            />}
             { this.state.packageData.collected.metadata.readme &&
               <Markdown
                 nameWithOwner={this.state.owner+ '/' + this.state.repo}
@@ -111,20 +135,6 @@ class Repo extends Component {
             }
           </div>
         }
-
-        {isSandboxReady &&
-        <iframe
-          src={sandboxUrl}
-          title="Code Example"
-          style={{
-            width:'100%',
-            height: '500px',
-            border: '0',
-            borderRadius: '4px',
-            overflow: 'hidden',
-          }}
-          sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-        />}
       </div>
     );
   }
