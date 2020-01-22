@@ -71,10 +71,11 @@ class Repo extends Component {
         this.setState({
           owner: this.state.owner,
           repo: this.state.repo,
-          sandboxUrl: this.state.sandboxUrl + response.data.sandbox_id + '?view=split&codemirror=1',
+          sandboxUrl: this.state.sandboxUrl + response.data.sandbox_id + '?view=split&codemirror=1&theme=light',
           isSandboxReady: true,
         });
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -113,7 +114,7 @@ class Repo extends Component {
               forks={this.state.packageData.github.forkCount}
               bugs={this.state.packageData.github.issueCount}
             />
-            {isSandboxReady &&
+            {/* {isSandboxReady &&
             <iframe
               src={sandboxUrl}
               title="Code Example"
@@ -126,12 +127,22 @@ class Repo extends Component {
                 marginLeft: '1.5rem',
               }}
               sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-            />}
+            />} */}
             { this.state.packageData.collected.metadata.readme &&
-              <Markdown
-                nameWithOwner={this.state.owner+ '/' + this.state.repo}
-                data={this.state.packageData.github.readme}
-              />
+              isSandboxReady && 
+                <Markdown
+                  nameWithOwner={this.state.owner+ '/' + this.state.repo}
+                  data={this.state.packageData.github.readme}
+                  isSandboxReady={isSandboxReady}
+                  sandboxUrl={sandboxUrl}
+                />
+            }
+            { this.state.packageData.collected.metadata.readme &&
+              !isSandboxReady && 
+                <Markdown
+                  nameWithOwner={this.state.owner+ '/' + this.state.repo}
+                  data={this.state.packageData.github.readme}
+                />
             }
           </div>
         }
