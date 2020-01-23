@@ -43,10 +43,15 @@ class Repo extends Component {
     let snippet = null;
 
     if (example === null || example.length === 0 || example[1].length === 0) {
-      snippet = "const " + metadata.name + " = require('" + metadata.name + "');\nconsole.log(" + metadata.name + ");"
+      let name = metadata.name.replace(/-/g, '');
+      snippet = "const " + name + " = require('" + metadata.name + "');\nconsole.log(" + name + ");"
     } else {
       snippet = example[1];
     }
+
+    metadata.dependencies = metadata.dependencies || {};
+    metadata.dependencies[metadata.name] = "^" + metadata.version;
+    console.log(metadata);
 
     const parameters = getParameters({
       files: {
@@ -55,9 +60,9 @@ class Repo extends Component {
         },
         "package.json": {
           content: {
-            dependencies: {
-              [metadata.name]: "^" + metadata.version,
-            }
+            dependencies: metadata.dependencies,
+            devDependencies: metadata.devDependencies,
+            peerDependencies: metadata.peerDependencies,
           }
         }
       }

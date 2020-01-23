@@ -29,7 +29,7 @@ class GlobalHeader extends Component {
         // const {user, signOut} = this.context;
         this.setState({
             query: '',
-            navLink: '/lib-stack/search',
+            navLink: '/search',
             npmResults: [],
             withSearch: this.props.withSearch,
             withoutLogo: this.props.withoutLogo,
