@@ -22,6 +22,7 @@ class Search extends Component {
       activePage: activePage,
       navLink: routes.SEARCH,
       npmResults: [],
+      apiDomain: props.apiDomain,
     };
     this.doSearch(new URLSearchParams(props.location.search).get('query'), activePage);
   }
@@ -31,7 +32,7 @@ class Search extends Component {
     console.log(offset);
 
     axios
-      .get('https://test-github-oauth.firebaseapp.com/api/v1/search?q=' + query + '&o=' + offset)
+      .get(this.state.apiDomain + '/api/v1/search?q=' + query + '&o=0')
       .then(res => {
         this.setState({
           query: query,

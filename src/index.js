@@ -9,16 +9,19 @@ import './index.css';
 import Home from './home';
 import Search from './search';
 import Repo from './repo';
+import getAPIDomain from './api-config';
 
 import * as serviceWorker from './serviceWorker';
 
 function App() {
+  const apiDomain = getAPIDomain();
+
   return (
       <Router>
         {/* <Route path={routes.DEFAULT} exact render={() => (<Redirect to={routes.HOME} />)} /> */}
-        <Route path={routes.HOME} exact component={Home} />
-        <Route path={routes.SEARCH} component={Search} />
-        <Route path={routes.REPO} component={Repo} />
+        <Route path={routes.HOME} exact render={(props) => <Home {...props} apiDomain={apiDomain} />} />
+        <Route path={routes.SEARCH} render={(props) => <Search {...props} apiDomain={apiDomain} />} />
+        <Route path={routes.REPO} render={(props) => <Repo {...props} apiDomain={apiDomain} />} />
       </Router>
   );
 }

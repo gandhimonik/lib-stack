@@ -20,13 +20,14 @@ class Repo extends Component {
       sandboxUrl: 'https://codesandbox.io/embed/',
       isSandboxReady: false,
       packageData: null,
+      apiDomain: props.apiDomain,
     };
     this.getData();
   }
 
   getData = () => {
     axios
-      .get('https://test-github-oauth.firebaseapp.com/api/v1/package?repo=' + this.state.repo)
+      .get(this.state.apiDomain + '/api/v1/package?repo=' + this.state.repo)
       .then(res => {
         this.setState({
           packageData: res.data,
@@ -134,7 +135,7 @@ class Repo extends Component {
               sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
             />} */}
             { this.state.packageData.collected.metadata.readme &&
-              isSandboxReady && 
+              isSandboxReady &&
                 <Markdown
                   nameWithOwner={this.state.owner+ '/' + this.state.repo}
                   data={this.state.packageData.github.readme}
@@ -143,7 +144,7 @@ class Repo extends Component {
                 />
             }
             { this.state.packageData.collected.metadata.readme &&
-              !isSandboxReady && 
+              !isSandboxReady &&
                 <Markdown
                   nameWithOwner={this.state.owner+ '/' + this.state.repo}
                   data={this.state.packageData.github.readme}
