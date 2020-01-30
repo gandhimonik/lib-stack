@@ -19,13 +19,14 @@ class Search extends Component {
       query: new URLSearchParams(props.location.search).get('query'),
       navLink: routes.SEARCH,
       npmResults: [],
+      apiDomain: props.apiDomain,
     };
     this.doSearch(new URLSearchParams(props.location.search).get('query'));
   }
 
   doSearch = (query) => {
     axios
-      .get('https://test-github-oauth.firebaseapp.com/api/v1/search?q=' + query + '&o=0')
+      .get(this.state.apiDomain + '/api/v1/search?q=' + query + '&o=0')
       .then(res => {
         this.setState({
           query: query,
