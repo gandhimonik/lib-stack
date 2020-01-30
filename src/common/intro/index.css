@@ -53,6 +53,7 @@ a.repo.link > h2.ui.header:hover {
     color: #939393;
     font-size: 16px;
     margin-top: .5rem;
+    text-align: left;
 }
 
 @media only screen and (max-width: 400px) {
