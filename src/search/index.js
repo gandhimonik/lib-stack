@@ -32,7 +32,7 @@ class Search extends Component {
     console.log(offset);
 
     axios
-      .get(this.state.apiDomain + '/api/v1/search?q=' + query + '&o=0')
+      .get(this.state.apiDomain + '/api/v1/search?q=' + query + '&o=' + offset)
       .then(res => {
         this.setState({
           query: query,
@@ -47,24 +47,26 @@ class Search extends Component {
     e.preventDefault();
     this.props.history.push(this.state.navLink + "?query=" + query);
     this.setState({
+      activePage: 1,
       npmResults: []
     });
-    this.doSearch(query, this.state.activePage);
+    this.doSearch(query, 1);
   }
 
   onPageChange = (e, {activePage}) => {
     console.log(this.state.navLink);
     this.props.history.push(this.state.navLink + "?query=" + this.state.query + "&p=" + activePage);
-    this.setState({
-      activePage: activePage,
-      npmResults: []
-    });
-    this.doSearch(this.state.query, activePage);
+    window.location.reload();
+    // this.setState({
+    //   activePage: activePage,
+    //   npmResults: []
+    // });
+    // this.doSearch(this.state.query, activePage);
   }
 
-  componentDidUpdate() {
-    window.scrollTo(0, 0);
-  }
+  // componentDidUpdate() {
+  //   window.scrollTo(0, 0);
+  // }
 
   render() {
     const results = this.state.npmResults;

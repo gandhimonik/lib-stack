@@ -37,3 +37,16 @@ div.row.loader {
 .ui.loader.list-loader {
     position: relative;
 }
+
+.ui.menu .item {
+    color: #4183c4;
+}
+
+.ui.menu a.item:hover {
+    color: #4183c4;
+}
+
+.ui.pagination.menu .active.item {
+    background-color: #4183c4;
+    color: #ffffff;
+}
