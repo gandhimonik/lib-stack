@@ -16,21 +16,28 @@ class SearchForm extends Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps');
+        this.setState({
+            query: nextProps.query || '',
+        });
+    }
+
     render() {
         return (
             <Form onSubmit={e => this.props.onSubmit(e, this.state.query)}>
-                {this.state.isLite && 
-                    <Form.Input 
+                {this.state.isLite &&
+                    <Form.Input
                         name="query"
-                        className="search wrapper" 
-                        icon="search" 
-                        placeholder="Search Libraries..." 
+                        className="search wrapper"
+                        icon="search"
+                        placeholder="Search Libraries..."
                         value={this.state.query}
                         onChange={this.onChange}
                     />
                 }
 
-                {!this.state.isLite && 
+                {!this.state.isLite &&
                     <Form.Group>
                         <Form.Input
                             width={13}
@@ -52,7 +59,7 @@ class SearchForm extends Component {
                         </Form.Button>
                     </Form.Group>
                 }
-                
+
             </Form>
         );
     }

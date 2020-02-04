@@ -27,6 +27,25 @@ class Search extends Component {
     this.doSearch(new URLSearchParams(props.location.search).get('query'), activePage);
   }
 
+  componentWillMount() {
+    window.onpopstate = (event) => {
+      console.log(event);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.location.search !== nextProps.location.search) {
+      let activePage = new URLSearchParams(nextProps.location.search).get('p');
+      activePage = parseInt(activePage) || 1;
+      const query = new URLSearchParams(nextProps.location.search).get('query');
+      this.setState({
+        query: query,
+        npmResults: [],
+      });
+      this.doSearch(query, activePage);
+    }
+  }
+
   doSearch = (query, activePage) => {
     const offset = activePage - 1;
     console.log(offset);
@@ -37,6 +56,7 @@ class Search extends Component {
         this.setState({
           query: query,
           npmResults: res.data,
+          activePage: activePage,
         });
         console.log(res.data);
       })
@@ -47,8 +67,7 @@ class Search extends Component {
     e.preventDefault();
     this.props.history.push(this.state.navLink + "?query=" + query);
     this.setState({
-      activePage: 1,
-      npmResults: []
+      npmResults: [],
     });
     this.doSearch(query, 1);
   }
@@ -56,17 +75,17 @@ class Search extends Component {
   onPageChange = (e, {activePage}) => {
     console.log(this.state.navLink);
     this.props.history.push(this.state.navLink + "?query=" + this.state.query + "&p=" + activePage);
-    window.location.reload();
-    // this.setState({
-    //   activePage: activePage,
-    //   npmResults: []
-    // });
-    // this.doSearch(this.state.query, activePage);
+    // window.location.reload();
+    this.setState({
+      npmResults: [],
+    });
+    this.doSearch(this.state.query, activePage);
   }
 
-  // componentDidUpdate() {
-  //   window.scrollTo(0, 0);
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    window.scrollTo(0, 0);
+    console.log('componentDidUpdate', prevState);
+  }
 
   render() {
     const results = this.state.npmResults;

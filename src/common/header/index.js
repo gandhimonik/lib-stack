@@ -7,12 +7,9 @@ import * as routes from '../../routes';
 
 import './index.css';
 import SearchForm from '../search-form';
-import { AuthContext } from '../auth';
 import profileImg from '../../images/profile.svg';
 
 class GlobalHeader extends Component {
-    static contextType = AuthContext;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -59,11 +56,11 @@ class GlobalHeader extends Component {
 
         const trigger = (
             <span>
-                {user && user.photoURL && 
-                    <Image className={'profile'} src={user.photoURL} /> 
+                {user && user.photoURL &&
+                    <Image className={'profile'} src={user.photoURL} />
                 }
-                {user && !user.photoURL && 
-                    <Image className={'profile'} src={profileImg} /> 
+                {user && !user.photoURL &&
+                    <Image className={'profile'} src={profileImg} />
                 }
             </span>
         );
@@ -74,18 +71,18 @@ class GlobalHeader extends Component {
         ]
 
         return (
-            <Menu 
-                inverted 
-                secondary 
+            <Menu
+                inverted
+                secondary
                 className="thunder global header"
                 style={{backgroundColor: this.state.noBackground ? 'white' : 'auto'}}>
-                {!withoutLogo && 
+                {!withoutLogo &&
                     <Menu.Item name="home">
                         <Link to={routes.HOME}><Logo size={'medium'} /></Link>
                     </Menu.Item>
                 }
 
-                {withSearch && 
+                {withSearch &&
                     <Menu.Menu position="right" className="search">
                         <Menu.Item name="home">
                             <SearchForm onSubmit={this.onSubmit} query={this.state.query} isLite={true} />
@@ -93,13 +90,13 @@ class GlobalHeader extends Component {
                     </Menu.Menu>
                 }
 
-                {user && 
+                {user &&
                     <Menu.Menu position="right" className="profile">
                         <Menu.Item name="profile">
-                            <Dropdown 
-                                trigger={trigger} 
-                                options={options} 
-                                pointing={"top right"} 
+                            <Dropdown
+                                trigger={trigger}
+                                options={options}
+                                pointing={"top right"}
                                 icon={null}
                                 onChange={this.onChange}
                                 selectOnBlur={false} />
