@@ -75,6 +75,12 @@ code {
   width: 100%;
 }
 
+.ui.icon.message {
+  margin: 1rem;
+  text-align: left;
+  width: 98%;
+}
+
 @media only screen and (max-height: 640px) {
   .ui.list.footer.abs {
     position: relative;

@@ -7,7 +7,7 @@ import GlobalHeader from '../common/header';
 import Intro from '../common/intro';
 import Stats from '../common/stats';
 import Markdown from '../common/markdown';
-import { Loader } from 'semantic-ui-react';
+import { Loader, Message } from 'semantic-ui-react';
 
 const sandboxBaseUrl = `https://codesandbox.io/api/v1/sandboxes/define`;
 
@@ -21,6 +21,7 @@ class Repo extends Component {
       isSandboxReady: false,
       packageData: null,
       apiDomain: props.apiDomain,
+      error: null,
     };
     this.getData();
   }
@@ -35,7 +36,12 @@ class Repo extends Component {
         this.getSandbox();
         console.log(res.data);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({
+          packageData: null,
+          error: err.toString(),
+        });
+      });
   }
 
   getSandbox = () => {
@@ -96,11 +102,17 @@ class Repo extends Component {
         </Helmet>
         <GlobalHeader withSearch={true} history={this.props.history} />
 
-        { this.state.packageData === null &&
+        { !this.state.error && this.state.packageData === null &&
           <Loader active>Loading</Loader>
         }
 
-        { this.state.packageData &&
+        { this.state.error &&
+          <Message negative compact icon="warning sign"
+            header="Oops!! Something went wrong!!"
+            content="Don't worry brothers of the Night's Watch are awake to fix whatever is beyond this wall!!" />
+        }
+
+        { !this.state.error && this.state.packageData &&
           <div>
             <Intro
               nameWithOwner={this.state.packageData.collected.metadata.nameWithOwner}

@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 import * as routes from '../routes';
 import axios from 'axios';
 
-import {List, Grid, Loader, Pagination} from 'semantic-ui-react';
+import {List, Grid, Loader, Pagination, Message} from 'semantic-ui-react';
 import GlobalHeader from '../common/header';
 import SearchForm from '../common/search-form';
 
@@ -23,6 +23,7 @@ class Search extends Component {
       navLink: routes.SEARCH,
       npmResults: [],
       apiDomain: props.apiDomain,
+      error: null,
     };
     this.doSearch(new URLSearchParams(props.location.search).get('query'), activePage);
   }
@@ -60,7 +61,14 @@ class Search extends Component {
         });
         console.log(res.data);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({
+          query: query,
+          npmResults: null,
+          activePage: activePage,
+          error: err.toString(),
+        });
+      });
   }
 
   onSubmit = (e, query) => {
@@ -68,6 +76,7 @@ class Search extends Component {
     this.props.history.push(this.state.navLink + "?query=" + query);
     this.setState({
       npmResults: [],
+      error: null,
     });
     this.doSearch(query, 1);
   }
@@ -78,6 +87,7 @@ class Search extends Component {
     // window.location.reload();
     this.setState({
       npmResults: [],
+      error: null,
     });
     this.doSearch(this.state.query, activePage);
   }
@@ -108,11 +118,23 @@ class Search extends Component {
         </Grid.Row>
         <Grid.Row centered className="search-container">
           <List className={'search-list'}>
-            {results.length === 0 &&
+            {Array.isArray(results) && results.length === 0 &&
               <Loader className={"list-loader"} active>Loading</Loader>
             }
 
-            {results.map(node => {
+            {this.state.error &&
+              <Message negative compact icon="warning sign"
+                header="Oops!! Something went wrong!!"
+                content="Don't worry brothers of the Night's Watch are awake to fix whatever is beyond this wall!!" />
+            }
+
+            {results === "No results found" &&
+              <Message info compact icon="warning sign"
+                header="No results found!!"
+                content="That's right. You came out here looking for something that didn't exist." />
+            }
+
+            {Array.isArray(results) && results.map(node => {
               console.log(node);
 
               return (
@@ -139,7 +161,7 @@ class Search extends Component {
               );
             })}
           </List>
-          {results.length > 0 &&
+          {Array.isArray(results) && results.length > 0 &&
             <Pagination
               activePage={this.state.activePage}
               onPageChange={this.onPageChange}
