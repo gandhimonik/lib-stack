@@ -14,7 +14,7 @@ class GlobalHeader extends Component {
         super(props);
         this.state = {
             query: '',
-            navLink: '/lib-stack/search',
+            navLink: '/search',
             npmResults: [],
             withSearch: this.props.withSearch,
             history: this.props.history,
