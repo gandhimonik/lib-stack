@@ -169,7 +169,9 @@ class Search extends Component {
             />
           }
         </Grid.Row>
-        <Footer />
+        <Grid.Row centered>
+          <Footer />
+        </Grid.Row>
       </Grid>
     );
   }

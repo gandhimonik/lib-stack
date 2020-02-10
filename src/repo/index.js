@@ -7,7 +7,10 @@ import GlobalHeader from '../common/header';
 import Intro from '../common/intro';
 import Stats from '../common/stats';
 import Markdown from '../common/markdown';
-import { Loader, Message } from 'semantic-ui-react';
+import { Loader, Message, Grid } from 'semantic-ui-react';
+import Footer from '../common/footer';
+
+import './index.css';
 
 const sandboxBaseUrl = `https://codesandbox.io/api/v1/sandboxes/define`;
 
@@ -94,77 +97,83 @@ class Repo extends Component {
    const { sandboxUrl, isSandboxReady } = this.state;
 
     return (
-      <div className="App">
+      <Grid>
         <Helmet>
           <title>{this.state.owner}/{this.state.repo} - LibStack</title>
           <meta name="description"
                 content="Github repo description"/>
         </Helmet>
-        <GlobalHeader withSearch={true} history={this.props.history} />
+        <Grid.Row>
+          <GlobalHeader withSearch={true} history={this.props.history} />
+        </Grid.Row>
+        <Grid.Row className={"main"}>
+          { !this.state.error && this.state.packageData === null &&
+            <Loader active>Loading</Loader>
+          }
 
-        { !this.state.error && this.state.packageData === null &&
-          <Loader active>Loading</Loader>
-        }
+          { this.state.error &&
+            <Message negative compact icon="warning sign"
+              header="Oops!! Something went wrong!!"
+              content="Don't worry brothers of the Night's Watch are awake to fix whatever is beyond this wall!!" />
+          }
 
-        { this.state.error &&
-          <Message negative compact icon="warning sign"
-            header="Oops!! Something went wrong!!"
-            content="Don't worry brothers of the Night's Watch are awake to fix whatever is beyond this wall!!" />
-        }
-
-        { !this.state.error && this.state.packageData &&
-          <div>
-            <Intro
-              nameWithOwner={this.state.packageData.collected.metadata.nameWithOwner}
-              name={this.state.packageData.collected.metadata.name}
-              description={this.state.packageData.collected.metadata.description}
-              owner={this.state.packageData.collected.metadata.publisher.username}
-              version={this.state.packageData.collected.metadata.version}
-              date={new Date(this.state.packageData.collected.metadata.date).toDateString()}
-              gravatar={this.state.packageData.collected.metadata.publisher.gravatar}
-              isLink={false}
-            />
-            <Stats
-              type={'left'}
-              watchers={this.state.packageData.github.watchCount}
-              stars={this.state.packageData.github.starCount}
-              downloads={this.state.packageData.downloadCount}
-              forks={this.state.packageData.github.forkCount}
-              bugs={this.state.packageData.github.issueCount}
-            />
-            {/* {isSandboxReady &&
-            <iframe
-              src={sandboxUrl}
-              title="Code Example"
-              style={{
-                width:'90%',
-                height: '500px',
-                border: '2px solid black',
-                borderRadius: '4px',
-                overflow: 'hidden',
-                marginLeft: '1.5rem',
-              }}
-              sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-            />} */}
-            { this.state.packageData.collected.metadata.readme &&
-              isSandboxReady &&
-                <Markdown
-                  nameWithOwner={this.state.owner+ '/' + this.state.repo}
-                  data={this.state.packageData.github.readme}
-                  isSandboxReady={isSandboxReady}
-                  sandboxUrl={sandboxUrl}
-                />
-            }
-            { this.state.packageData.collected.metadata.readme &&
-              !isSandboxReady &&
-                <Markdown
-                  nameWithOwner={this.state.owner+ '/' + this.state.repo}
-                  data={this.state.packageData.github.readme}
-                />
-            }
-          </div>
-        }
-      </div>
+          { !this.state.error && this.state.packageData &&
+            <div>
+              <Intro
+                nameWithOwner={this.state.packageData.collected.metadata.nameWithOwner}
+                name={this.state.packageData.collected.metadata.name}
+                description={this.state.packageData.collected.metadata.description}
+                owner={this.state.packageData.collected.metadata.publisher.username}
+                version={this.state.packageData.collected.metadata.version}
+                date={new Date(this.state.packageData.collected.metadata.date).toDateString()}
+                gravatar={this.state.packageData.collected.metadata.publisher.gravatar}
+                isLink={false}
+              />
+              <Stats
+                type={'left'}
+                watchers={this.state.packageData.github.watchCount}
+                stars={this.state.packageData.github.starCount}
+                downloads={this.state.packageData.downloadCount}
+                forks={this.state.packageData.github.forkCount}
+                bugs={this.state.packageData.github.issueCount}
+              />
+              {/* {isSandboxReady &&
+              <iframe
+                src={sandboxUrl}
+                title="Code Example"
+                style={{
+                  width:'90%',
+                  height: '500px',
+                  border: '2px solid black',
+                  borderRadius: '4px',
+                  overflow: 'hidden',
+                  marginLeft: '1.5rem',
+                }}
+                sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+              />} */}
+              { this.state.packageData.collected.metadata.readme &&
+                isSandboxReady &&
+                  <Markdown
+                    nameWithOwner={this.state.owner+ '/' + this.state.repo}
+                    data={this.state.packageData.github.readme}
+                    isSandboxReady={isSandboxReady}
+                    sandboxUrl={sandboxUrl}
+                  />
+              }
+              { this.state.packageData.collected.metadata.readme &&
+                !isSandboxReady &&
+                  <Markdown
+                    nameWithOwner={this.state.owner+ '/' + this.state.repo}
+                    data={this.state.packageData.github.readme}
+                  />
+              }
+            </div>
+          }
+        </Grid.Row>
+        <Grid.Row centered>
+          <Footer />
+        </Grid.Row>
+      </Grid>
     );
   }
 }
