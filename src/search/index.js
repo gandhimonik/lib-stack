@@ -28,12 +28,6 @@ class Search extends Component {
     this.doSearch(new URLSearchParams(props.location.search).get('query'), activePage);
   }
 
-  componentWillMount() {
-    window.onpopstate = (event) => {
-      console.log(event);
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.location.search !== nextProps.location.search) {
       let activePage = new URLSearchParams(nextProps.location.search).get('p');
@@ -49,7 +43,6 @@ class Search extends Component {
 
   doSearch = (query, activePage) => {
     const offset = activePage - 1;
-    console.log(offset);
 
     axios
       .get(this.state.apiDomain + '/api/v1/search?q=' + query + '&o=' + offset)
@@ -59,7 +52,6 @@ class Search extends Component {
           npmResults: res.data,
           activePage: activePage,
         });
-        console.log(res.data);
       })
       .catch(err => {
         this.setState({
@@ -82,7 +74,6 @@ class Search extends Component {
   }
 
   onPageChange = (e, {activePage}) => {
-    console.log(this.state.navLink);
     this.props.history.push(this.state.navLink + "?query=" + this.state.query + "&p=" + activePage);
     // window.location.reload();
     this.setState({
@@ -94,7 +85,6 @@ class Search extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     window.scrollTo(0, 0);
-    console.log('componentDidUpdate', prevState);
   }
 
   render() {
@@ -135,7 +125,6 @@ class Search extends Component {
             }
 
             {Array.isArray(results) && results.map(node => {
-              console.log(node);
 
               return (
                 <List.Item className={'search-item'} key={node.package.name}>

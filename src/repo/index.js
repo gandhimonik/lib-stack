@@ -37,7 +37,6 @@ class Repo extends Component {
           packageData: res.data,
         });
         this.getSandbox();
-        console.log(res.data);
       })
       .catch(err => {
         this.setState({
@@ -61,7 +60,6 @@ class Repo extends Component {
 
     metadata.dependencies = metadata.dependencies || {};
     metadata.dependencies[metadata.name] = "^" + metadata.version;
-    console.log(metadata);
 
     const parameters = getParameters({
       files: {
@@ -82,7 +80,6 @@ class Repo extends Component {
 
     axios.get(url)
       .then(response => {
-        console.log(response.data.sandbox_id);
         this.setState({
           owner: this.state.owner,
           repo: this.state.repo,
@@ -90,7 +87,7 @@ class Repo extends Component {
           isSandboxReady: true,
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   }
 
   render() {

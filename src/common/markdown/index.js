@@ -48,7 +48,6 @@ class Markdown extends Component {
         html = html.replace(hrefUrl, '$1https://github.com/' + nameWithOwner + '/blob/master$2');
 
         // Add code example
-        console.log(isSandboxReady)
         if (isSandboxReady) {
             let title = html.slice(0, html.indexOf('<h', 3));
             let restOfHtml = html.slice(html.indexOf('<h', 3));

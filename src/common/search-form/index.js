@@ -17,7 +17,6 @@ class SearchForm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
         this.setState({
             query: nextProps.query || '',
         });
