@@ -36,6 +36,7 @@ class Search extends Component {
       this.setState({
         query: query,
         npmResults: [],
+        error: null,
       });
       this.doSearch(query, activePage);
     }
@@ -51,6 +52,7 @@ class Search extends Component {
           query: query,
           npmResults: res.data,
           activePage: activePage,
+          error: null,
         });
       })
       .catch(err => {

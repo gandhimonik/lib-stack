@@ -92,6 +92,7 @@ class Repo extends Component {
 
   render() {
    const { sandboxUrl, isSandboxReady } = this.state;
+   console.log(this.state);
 
     return (
       <Grid>
@@ -148,7 +149,7 @@ class Repo extends Component {
                 }}
                 sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
               />} */}
-              { this.state.packageData.collected.metadata.readme &&
+              { this.state.packageData.github.readme &&
                 isSandboxReady &&
                   <Markdown
                     nameWithOwner={this.state.owner+ '/' + this.state.repo}
@@ -157,7 +158,7 @@ class Repo extends Component {
                     sandboxUrl={sandboxUrl}
                   />
               }
-              { this.state.packageData.collected.metadata.readme &&
+              { this.state.packageData.github.readme &&
                 !isSandboxReady &&
                   <Markdown
                     nameWithOwner={this.state.owner+ '/' + this.state.repo}
