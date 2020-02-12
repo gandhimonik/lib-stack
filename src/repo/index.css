@@ -5,3 +5,7 @@
 .ui.icon.message {
     max-height: 70px;
 }
+
+.wrapper {
+    width: 100%;
+}

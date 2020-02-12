@@ -92,7 +92,6 @@ class Repo extends Component {
 
   render() {
    const { sandboxUrl, isSandboxReady } = this.state;
-   console.log(this.state);
 
     return (
       <Grid>
@@ -116,7 +115,7 @@ class Repo extends Component {
           }
 
           { !this.state.error && this.state.packageData &&
-            <div>
+            <div className="wrapper">
               <Intro
                 nameWithOwner={this.state.packageData.collected.metadata.nameWithOwner}
                 name={this.state.packageData.collected.metadata.name}

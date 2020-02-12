@@ -46,7 +46,6 @@ class Markdown extends Component {
         let html = this.md.render(data);
         html = html.replace(htmlImgUrl, '$1https://github.com/' + nameWithOwner + '/raw/master/$2$3');
         html = html.replace(hrefUrl, '$1https://github.com/' + nameWithOwner + '/blob/master$2');
-        console.log(html);
 
         // Add code example
         if (isSandboxReady) {

@@ -24,6 +24,7 @@ class Search extends Component {
       npmResults: [],
       apiDomain: props.apiDomain,
       error: null,
+      totalPages: 0,
     };
     this.doSearch(new URLSearchParams(props.location.search).get('query'), activePage);
   }
@@ -50,8 +51,9 @@ class Search extends Component {
       .then(res => {
         this.setState({
           query: query,
-          npmResults: res.data,
+          npmResults: res.data.results,
           activePage: activePage,
+          totalPages: res.data.totalPages,
           error: null,
         });
       })
@@ -152,11 +154,11 @@ class Search extends Component {
               );
             })}
           </List>
-          {Array.isArray(results) && results.length > 0 &&
+          {Array.isArray(results) && results.length > 0 && this.state.totalPages > 0 &&
             <Pagination
               activePage={this.state.activePage}
               onPageChange={this.onPageChange}
-              totalPages={10}
+              totalPages={this.state.totalPages}
             />
           }
         </Grid.Row>
