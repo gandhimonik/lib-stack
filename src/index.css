@@ -98,4 +98,8 @@ code {
   div.ui.container {
     left: 0;
   }
+
+  .ui.large.horizontal.list > .item {
+    font-size: 14px;
+  }
 }

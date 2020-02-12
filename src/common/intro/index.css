@@ -54,6 +54,7 @@ a.repo.link > h2.ui.header:hover {
     font-size: 16px;
     margin-top: .5rem;
     text-align: left;
+    word-wrap: break-word;
 }
 
 @media only screen and (max-width: 400px) {

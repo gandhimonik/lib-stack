@@ -9,3 +9,9 @@
 .wrapper {
     width: 100%;
 }
+
+@media only screen and (max-width: 600px) {
+    .ui.menu.pagination {
+        font-size: .75rem;
+    }
+}
