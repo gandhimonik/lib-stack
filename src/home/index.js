@@ -34,12 +34,12 @@ class Home extends Component {
           </Grid.Row>
           <Grid.Row centered>
             <Grid.Column width={15} className="aligned">
-              <Header as='h3' className="title">Why search on Github and NPM when you can do both at the same time.</Header>
+              <Header as='h3' className="title">Why search on NPM and Github when you can do both at the same time.</Header>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
             <Container text className="copy">
-              <p>With LibStack, you can find what you’re looking for on Github and NPMJS registry in one go. LibStack provides consolidated info from Github and NPMJS along with a better interface to access the repository effectively and run its examples through a coding playground.</p>
+              <p>With LibStack, you can find what you’re looking for on NPMJS registry and Github in one go. LibStack provides consolidated info from NPMJS and Github along with a better interface to access the repository effectively and run its examples through a coding playground.</p>
             </Container>
           </Grid.Row>
           <Grid.Row centered>
