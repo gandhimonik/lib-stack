@@ -5,7 +5,7 @@
   "homepage": "https://libstack.dev/",
   "dependencies": {
     "axios": "^0.19.0",
-    "codesandbox": "^2.1.9",
+    "codesandbox": "^2.1.12",
     "firebase": "^7.2.1",
     "highlight.js": "^9.15.10",
     "markdown-it": "^9.1.0",
