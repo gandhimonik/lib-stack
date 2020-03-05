@@ -42,8 +42,8 @@
 }
 
 pre {
-    background: rgb(244, 251, 244);
-    color:  rgb(94, 110, 94);
+    background: #fafafa;
+    color:  #383a42;
     overflow-x: auto;
     padding: 1rem;
 }
@@ -68,7 +68,7 @@ img {
 }
 
 .readme tr:nth-child(even) {
-    background-color: rgb(244, 251, 244);
+    background-color: #fafafa;
 }
 
 .readme th, .readme td {

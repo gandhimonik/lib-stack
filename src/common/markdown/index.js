@@ -3,7 +3,7 @@ import MarkdownIt from 'markdown-it';
 import MarkdownItAnchor from 'markdown-it-anchor';
 import hljs from 'highlight.js';
 
-import './atelier-seaside-light.min.css';
+import './atom-one-light.min.css';
 import './index.css';
 import { Container } from 'semantic-ui-react';
 
