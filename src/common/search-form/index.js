@@ -8,6 +8,7 @@ class SearchForm extends Component {
             query: props.query || '',
             isLite: props.isLite,
         };
+        this.searchInput = React.createRef();
     }
 
     onChange = e => {
@@ -20,6 +21,12 @@ class SearchForm extends Component {
         this.setState({
             query: nextProps.query || '',
         });
+    }
+
+    componentDidMount() {
+        if (this.searchInput && this.searchInput.current) {
+            this.searchInput.current.focus();
+        }
     }
 
     render() {
@@ -46,6 +53,7 @@ class SearchForm extends Component {
                             onChange={this.onChange}
                             placeholder="Search..."
                             style={{margin: '1em 0'}}
+                            input={{ref: this.searchInput}}
                         />
                         <Form.Button
                             fluid
