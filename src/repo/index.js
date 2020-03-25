@@ -31,12 +31,19 @@ class Repo extends Component {
 
   getData = () => {
     axios
-      .get(this.state.apiDomain + '/api/v1/package?repo=' + this.state.repo)
+      .get(this.state.apiDomain + '/api/v1/new-package?repo=' + this.state.repo)
       .then(res => {
-        this.setState({
-          packageData: res.data,
-        });
-        this.getSandbox();
+        if (Object.keys(res.data).length === 0) {
+          this.setState({
+            packageData: null,
+            error: 'Error',
+          });
+        } else {
+          this.setState({
+            packageData: res.data,
+          });
+          this.getSandbox();
+        }
       })
       .catch(err => {
         this.setState({

@@ -47,11 +47,16 @@ class Search extends Component {
     const offset = activePage - 1;
 
     axios
-      .get(this.state.apiDomain + '/api/v1/search?q=' + query + '&o=' + offset)
+      .get(this.state.apiDomain + '/api/v1/new-search?q=' + query + '&o=' + offset)
       .then(res => {
+        let results = res.data.results;
+        if (!results) {
+          results = "No results found";
+        }
+
         this.setState({
           query: query,
-          npmResults: res.data.results,
+          npmResults: results,
           activePage: activePage,
           totalPages: res.data.totalPages,
           error: null,
@@ -129,17 +134,19 @@ class Search extends Component {
             }
 
             {Array.isArray(results) && results.map(node => {
+              let nameWithOwner = node.collected.metadata.nameWithOwner;
+              nameWithOwner = nameWithOwner.slice(0, nameWithOwner.indexOf('/')) + '/' + node.collected.metadata.name;
 
               return (
-                <List.Item className={'search-item'} key={node.package.name}>
+                <List.Item className={'search-item'} key={node.collected.metadata.name}>
                   <Intro
-                    nameWithOwner={node.package.nameWithOwner}
-                    name={node.package.name}
-                    description={node.package.description}
-                    owner={node.package.publisher.username}
-                    version={node.package.version}
-                    date={new Date(node.package.date).toDateString()}
-                    gravatar={node.package.publisher.gravatar}
+                    nameWithOwner={nameWithOwner}
+                    name={node.collected.metadata.name}
+                    description={node.collected.metadata.description}
+                    owner={node.collected.metadata.publisher.username}
+                    version={node.collected.metadata.version}
+                    date={new Date(node.collected.metadata.date).toDateString()}
+                    gravatar={node.collected.metadata.publisher.gravatar}
                     isLink={true}
                     />
                     <Stats
