@@ -55,46 +55,77 @@ class Repo extends Component {
 
   getSandbox = () => {
     const { collected: { metadata } } = this.state.packageData;
-    const { example } = this.state.packageData;
+    // const { example } = this.state.packageData;
     let snippet = null;
 
-    if (example === null || example.length === 0 || example[1].length === 0) {
+    // if (example === null || example.length === 0 || example[1].length === 0) {
       let name = metadata.name.replace(/-/g, '');
       snippet = "const " + name + " = require('" + metadata.name + "');\nconsole.log(" + name + ");"
-    } else {
-      snippet = example[1];
-    }
+    // } else {
+    //   snippet = example[1];
+    // }
 
-    metadata.dependencies = metadata.dependencies || {};
+    snippet += `\n\ndocument.getElementById('app').innerHTML = \n'<h1>Hello ${metadata.name}!</h1>'`;
+
+    // metadata.dependencies = metadata.dependencies || {};
+    // metadata.dependencies = Object.assign(metadata.dependencies, metadata.devDependencies);
+    metadata.dependencies = {};
+    metadata.dependencies = Object.assign(metadata.dependencies, metadata.peerDependencies);
     metadata.dependencies[metadata.name] = "^" + metadata.version;
-
-    const parameters = getParameters({
+    
+    const params = getParameters({
       files: {
+        "index.html": {
+          content: `<!DOCTYPE html>
+          <html>
+          
+          <head>
+            <title>Parcel Sandbox</title>
+            <meta charset="UTF-8" />
+          </head>
+          
+          <body>
+            <div id="app"></div>
+          
+            <script src="index.js">
+            </script>
+          </body>
+          
+          </html>`
+        },
         "index.js": {
           content: snippet
         },
+        "sandbox.config.json": {
+          content: {
+            "template": "parcel"
+          }
+        },
         "package.json": {
           content: {
-            dependencies: metadata.dependencies,
-            devDependencies: metadata.devDependencies,
-            peerDependencies: metadata.peerDependencies,
+            "scripts": {
+              "start": "parcel index.html --open",
+              "build": "parcel build index.html"
+            },
+            "dependencies": metadata.dependencies,
           }
         }
       }
     });
 
-    const url = sandboxBaseUrl + `?parameters=${parameters}&json=1`;
-
-    axios.get(url)
-      .then(response => {
-        this.setState({
-          owner: this.state.owner,
-          repo: this.state.repo,
-          sandboxUrl: this.state.sandboxUrl + response.data.sandbox_id + '?view=split&codemirror=1&theme=light',
-          isSandboxReady: true,
-        });
-      })
-      .catch(err => console.error(err));
+    axios.post(sandboxBaseUrl, {
+      parameters: params,
+      json: 1
+    })
+    .then(response => {
+      this.setState({
+        owner: this.state.owner,
+        repo: this.state.repo,
+        sandboxUrl: this.state.sandboxUrl + response.data.sandbox_id + '?forcerefresh=1&view=split&codemirror=1&theme=light',
+        isSandboxReady: true,
+      });
+    })
+    .catch(err => console.error(err));
   }
 
   render() {
