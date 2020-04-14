@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 import MarkdownIt from 'markdown-it';
 import MarkdownItAnchor from 'markdown-it-anchor';
 import hljs from 'highlight.js';
-import remark from 'remark';
-import html from 'remark-html';
-import highlight from 'remark-highlight.js';
-import codesandbox from 'remark-codesandbox';
-
 
 import './atom-one-light.min.css';
 import './index.css';
@@ -20,7 +15,6 @@ class Markdown extends Component {
             nameWithOwner: props.nameWithOwner,
             isSandboxReady: props.isSandboxReady,
             sandboxUrl: props.sandboxUrl,
-            html: ''
         };
         this.md = new MarkdownIt('default', {
             injected: true,
@@ -39,63 +33,33 @@ class Markdown extends Component {
             level: [1, 2, 3, 4],
             slugify: s => s.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'')
         });
-
-        this.remark = remark()
-                        .use(codesandbox, { 
-                            mode: 'button'
-                        })
-                        .use(highlight)
-                        .use(html);
     }
 
-    componentDidMount() {
-        this.parse();
-    }
-
-    parse() {
-        if (!this.state.data) {
-            return;
-        }
-
+    render() {
         let {data, nameWithOwner, isSandboxReady, sandboxUrl} = this.state;
-
         const fullImgUrl = new RegExp(/(https:\/\/github\.com\/)([a-zA-Z0-9\-_/]*)(blob)([a-zA-Z0-9\-_/]*)(\.(gif|jpeg|jpg|png))/, 'gm');
         const htmlImgUrl = new RegExp(/(src=")([\w\d-/]*)(\.(gif|jpeg|jpg|png)(\?[\w\d&=]*)?")/, 'gm');
         const hrefUrl = new RegExp(/(href=")([^#https][\w\d-/.]*)/, 'gm');
 
         data = data.replace(fullImgUrl, '$1$2raw$4$5');
-
-        console.log(data);
         
-        this.remark.process(data, (err, file) => {
-            if (err) {
-                console.log(err);
-            } else {
-                let html = String(file);
-                html = html.replace(htmlImgUrl, '$1https://github.com/' + nameWithOwner + '/raw/master/$2$3');
-                html = html.replace(hrefUrl, '$1https://github.com/' + nameWithOwner + '/blob/master$2');
+        let html = this.md.render(data);
+        html = html.replace(htmlImgUrl, '$1https://github.com/' + nameWithOwner + '/raw/master/$2$3');
+        html = html.replace(hrefUrl, '$1https://github.com/' + nameWithOwner + '/blob/master$2');
 
-                // Add code example
-                if (isSandboxReady) {
-                    let title = html.slice(0, html.indexOf('<h', 3));
-                    let restOfHtml = html.slice(html.indexOf('<h', 3));
-                    let sandboxHtml = `<h2>Try it out</h2><iframe src="${sandboxUrl}" 
-                    title="Code Example" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-                    style="width: 100%; height: 500px; border: 2px solid black; border-radius: 4px; overflow: hidden;"></iframe>`
-                    html = title + sandboxHtml + restOfHtml;
-                    this.setState({
-                        html: html
-                    });
-                }
-            }
-        });
-    }
+        // Add code example
+        if (isSandboxReady) {
+            let title = html.slice(0, html.indexOf('<h', 3));
+            let restOfHtml = html.slice(html.indexOf('<h', 3));
+            let sandboxHtml = `<h2>Try it out</h2><iframe src="${sandboxUrl}" 
+            title="Code Example" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+            style="width: 100%; height: 500px; border: 2px solid black; border-radius: 4px; overflow: hidden;"></iframe>`
+            html = title + sandboxHtml + restOfHtml;
+        }
 
-    render() {
         return (
-            <div>
-                { this.state.html && <Container fluid className="readme" dangerouslySetInnerHTML={{__html: this.state.html}}></Container> }
-            </div>
+            <Container fluid className="readme" dangerouslySetInnerHTML={{__html: html}}>
+            </Container>
         );
     }
 }
