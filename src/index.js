@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import * as routes from './routes';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -18,7 +18,7 @@ function App() {
 
   return (
       <Router>
-        {/* <Route path={routes.DEFAULT} exact render={() => (<Redirect to={routes.HOME} />)} /> */}
+        {<Route path={routes.DEFAULT} exact render={() => (<Redirect to={routes.HOME} />)} /> }
         <Route path={routes.HOME} exact render={(props) => <Home {...props} apiDomain={apiDomain} />} />
         <Route path={routes.SEARCH} render={(props) => <Search {...props} apiDomain={apiDomain} />} />
         <Route path={routes.REPO} render={(props) => <Repo {...props} apiDomain={apiDomain} />} />
